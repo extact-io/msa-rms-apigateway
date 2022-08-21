@@ -1,0 +1,264 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>io.extact</groupId>
+		<artifactId>msa-rms-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../msa-rms-parent/pom.xml</relativePath>
+	</parent>
+	<artifactId>msa-rms-application</artifactId>
+	<packaging>jar</packaging>
+	<name>msa-rms-application</name>
+	<description>rms application module</description>
+
+	<properties>
+		<mainClass>io.extact.msa.rms.application.webapi.WebApiMain</mainClass>
+		<oas.server.host>localhost</oas.server.host>
+		<oas.server.port>7001</oas.server.port>
+		<target.env>develop</target.env>
+		<docker.image.name>msa-application</docker.image.name>
+	</properties>
+
+	<dependencies>
+		<!-- ======================================== -->
+		<!-- *** rms module dependencies ***              -->
+		<!-- ======================================== -->
+		<dependency>
+			<groupId>io.extact</groupId>
+			<artifactId>msa-rms-test-lib</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.extact</groupId>
+			<artifactId>msa-rms-platform-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.extact</groupId>
+			<artifactId>msa-rms-platform-fw</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.extact</groupId>
+			<artifactId>msa-rms-platform-fw-test-lib</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- ======================================== -->
+		<!-- *** provided scope dependencies ***      -->
+		<!-- ======================================== -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- redefine with compile scoped in pesistence-jpa -->
+		<dependency>
+			<groupId>jakarta.transaction</groupId>
+			<artifactId>jakarta.transaction-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- ======================================== -->
+		<!-- *** compile scope dependencies(APIs) *** -->
+		<!-- ======================================== -->
+		<!-- dependent JakartaEE APIs -->
+		<!-- for service/domain layer dependency -->
+		<dependency>
+			<groupId>jakarta.inject</groupId>
+			<artifactId>jakarta.inject-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.enterprise</groupId>
+			<artifactId>jakarta.enterprise.cdi-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+		</dependency>
+		<!-- for webapi -->
+		<dependency>
+			<groupId>jakarta.ws.rs</groupId>
+			<artifactId>jakarta.ws.rs-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.json.bind</groupId>
+			<artifactId>jakarta.json.bind-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.security.enterprise</groupId>
+			<artifactId>javax.security.enterprise-api</artifactId>
+		</dependency>
+
+		<!-- dependent MicroProfile APIs -->
+		<dependency>
+			<groupId>org.eclipse.microprofile.jwt</groupId>
+			<artifactId>microprofile-jwt-auth-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.microprofile.health</groupId>
+			<artifactId>microprofile-health-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.microprofile.openapi</groupId>
+			<artifactId>microprofile-openapi-api</artifactId>
+		</dependency>
+		<dependency>
+        	<groupId>org.eclipse.microprofile.rest.client</groupId>
+    		<artifactId>microprofile-rest-client-api</artifactId>
+		</dependency>
+
+		<!-- ======================================== -->
+		<!-- *** runtime scope dependencies ***       -->
+		<!-- ======================================== -->
+		<!-- for MicroProfile runtimes -->
+		<dependency>
+			<groupId>io.helidon.microprofile.server</groupId>
+			<artifactId>helidon-microprofile-server</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.helidon.microprofile.openapi</groupId>
+			<artifactId>helidon-microprofile-openapi</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.helidon.microprofile.rest-client</groupId>
+			<artifactId>helidon-microprofile-rest-client</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.helidon.microprofile.health</groupId>
+			<artifactId>helidon-microprofile-health</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.helidon.config</groupId>
+			<artifactId>helidon-config-encryption</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.helidon.microprofile</groupId>
+			<artifactId>helidon-microprofile-cors</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.helidon.microprofile</groupId>
+			<artifactId>helidon-microprofile-access-log</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.helidon.webserver</groupId>
+			<artifactId>helidon-webserver-access-log</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.helidon.health</groupId>
+			<artifactId>helidon-health-checks</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- for JWT implementation -->
+		<dependency>
+			<groupId>org.bitbucket.b_c</groupId>
+			<artifactId>jose4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- for jax-rs ext runtime -->
+		<!-- for binding to application/json. It won't work without this -->
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-binding</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!--
+		JAX-RS's (de)serializer uses json-b's yasson, not jackson.
+		Also, jackson doesn't support json-b
+		for Small Rye OpenAPI dependency
+		The jackson dependency was removed in the following issue.
+		but the dependency was added provisionally because the alternative method is unknown.
+		https://github.com/oracle/helidon/issues/1109
+		-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+		</dependency>
+
+		<!-- for BeanValidation runtimes -->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-bean-validation</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>jakarta.el</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- ======================================== -->
+		<!-- *** test scope dependencies ***      -->
+		<!-- ======================================== -->
+		<!-- for WARN:javax.persistence.spi::No valid providers found-->
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.jpa</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources-filtered</directory>
+				<filtering>true</filtering>
+			</resource>
+			<!--
+			<resource>
+				<directory>env/profile/${target.env}</directory>
+			</resource>
+			-->
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>product</id>
+			<properties>
+				<target.env>product</target.env>
+				<oas.server.host>app.extact.io</oas.server.host>
+				<oas.server.port>443</oas.server.port>
+			</properties>
+		</profile>
+	</profiles>
+</project>

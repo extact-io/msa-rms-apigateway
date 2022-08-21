@@ -1,0 +1,25 @@
+# $ docker-compose up
+version: "3"
+services:
+  msa-application:
+    image: msa-application:latest
+    container_name: "msa-application"
+    ports:
+      - "7001:7001"
+    environment:
+      - JWT_FILTER_ENABLE=false
+      - SERVICE_URL_ITEM=http://msa-service-item:7002
+      - SERVICE_URL_RESERVATION=http://msa-service-reservation:7003
+      - SERVICE_URL_USER=http://msa-service-user:7004
+  msa-service-item:
+    image: msa-service-item:latest
+    container_name: "msa-service-item"
+  msa-service-reservation:
+    image: msa-service-reservation:latest
+    container_name: "msa-service-reservation"
+    environment:
+      - SERVICE_URL_ITEM=http://msa-service-item:7002
+      - SERVICE_URL_USER=http://msa-service-user:7004
+  msa-service-user:
+    image: msa-service-user:latest
+    container_name: "msa-service-user"

@@ -1,0 +1,47 @@
+#config_ordinal: 201
+#server.port: 8888
+#jwt.filter.enable: false
+
+service.url:
+  item: http://localhost:7002
+  reservation: http://localhost:7003
+  user: http://localhost:7004
+
+#----------------------------------
+# rmsApplications Configurations
+#----------------------------------
+web-api-item/mp-rest/url: ${service.url.item}
+web-api-reservation/mp-rest/url: ${service.url.reservation}
+web-api-user/mp-rest/url: ${service.url.user}
+
+configuredCdi:
+  register:
+    - class: io.extact.msa.rms.platform.core.jwt.impl.jose4j.Jose4jJwtGenerator
+    - class: io.extact.msa.rms.platform.core.jwt.impl.jose4j.Jose4PrivateSecretedTokenValidator
+
+external:
+  apiType: real
+
+main.manifest.jar: msa-rms-application\.jar$
+
+jwt.claim:
+  issuer: RentalReservationSystem
+
+# Set when you want to filter the output.
+# Output the entire amount even if there is no configdump setting itself.
+configdump:
+  # true : Output only the config that matches the prefix to filter.
+  # false: Temporarily disable the filter.
+  filter-enable: true
+  filters:
+    #- filter: security
+    - filter: server
+    #- filter: javax
+    #- filter: cors
+    #- filter: csv
+    #- filter: persistence
+    #- filter: configuredCdi
+    #- filter: json
+    #- filter: mp
+    #- filter: jwt
+    #- filter: healthCheck
