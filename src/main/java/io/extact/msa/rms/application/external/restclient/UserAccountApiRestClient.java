@@ -20,7 +20,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import io.extact.msa.rms.application.external.dto.AddUserAccountDto;
 import io.extact.msa.rms.application.external.dto.UserAccountDto;
 import io.extact.msa.rms.platform.core.jaxrs.converter.RmsTypeParameterFeature;
-import io.extact.msa.rms.platform.core.jwt.login.PropagateLoginClientHeadersFactory;
+import io.extact.msa.rms.platform.core.jwt.client.PropagateLoginClientHeadersFactory;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException;
 import io.extact.msa.rms.platform.fw.webapi.client.ExceptionPropagateClientMapper;
 

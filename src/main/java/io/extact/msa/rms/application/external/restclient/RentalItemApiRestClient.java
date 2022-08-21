@@ -19,7 +19,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import io.extact.msa.rms.application.external.dto.AddRentalItemDto;
 import io.extact.msa.rms.application.external.dto.RentalItemDto;
 import io.extact.msa.rms.platform.core.jaxrs.converter.RmsTypeParameterFeature;
-import io.extact.msa.rms.platform.core.jwt.login.PropagateLoginClientHeadersFactory;
+import io.extact.msa.rms.platform.core.jwt.client.PropagateLoginClientHeadersFactory;
 import io.extact.msa.rms.platform.fw.webapi.client.ExceptionPropagateClientMapper;
 
 @RegisterRestClient(configKey = "web-api-item")

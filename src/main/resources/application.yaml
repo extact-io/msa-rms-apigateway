@@ -17,7 +17,8 @@ web-api-user/mp-rest/url: ${service.url.user}
 configuredCdi:
   register:
     - class: io.extact.msa.rms.platform.core.jwt.impl.jose4j.Jose4jJwtGenerator
-    - class: io.extact.msa.rms.platform.core.jwt.impl.jose4j.Jose4PrivateSecretedTokenValidator
+    - class: io.extact.msa.rms.platform.core.jwt.impl.jose4j.Jose4jPrivateSecretedTokenValidator
+    - class: io.extact.msa.rms.platform.core.jwt.client.PropagateLoginClientHeadersFactory
 
 external:
   apiType: real
