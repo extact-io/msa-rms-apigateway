@@ -3,9 +3,9 @@ package io.extact.msa.rms.application.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Event;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Event;
+import jakarta.inject.Inject;
 
 import io.extact.msa.rms.application.external.UserAccountApi;
 import io.extact.msa.rms.application.external.dto.AddUserAccountDto;

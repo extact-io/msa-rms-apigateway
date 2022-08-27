@@ -88,8 +88,8 @@
 			<artifactId>jakarta.json.bind-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>javax.security.enterprise</groupId>
-			<artifactId>javax.security.enterprise-api</artifactId>
+		    <groupId>jakarta.security.enterprise</groupId>
+		    <artifactId>jakarta.security.enterprise-api</artifactId>
 		</dependency>
 
 		<!-- dependent MicroProfile APIs -->
@@ -216,7 +216,7 @@
 		<!-- ======================================== -->
 		<!-- *** test scope dependencies ***      -->
 		<!-- ======================================== -->
-		<!-- for WARN:javax.persistence.spi::No valid providers found-->
+		<!-- for WARN:jakarta.persistence.spi::No valid providers found-->
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>org.eclipse.persistence.jpa</artifactId>

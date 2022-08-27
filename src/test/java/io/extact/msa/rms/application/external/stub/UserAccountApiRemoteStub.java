@@ -2,9 +2,9 @@ package io.extact.msa.rms.application.external.stub;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.Path;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.Path;
 
 import io.extact.msa.rms.application.external.dto.AddUserAccountDto;
 import io.extact.msa.rms.application.external.dto.UserAccountDto;

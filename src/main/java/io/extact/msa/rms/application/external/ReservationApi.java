@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import javax.ws.rs.QueryParam;
+import jakarta.ws.rs.QueryParam;
 
 import io.extact.msa.rms.application.external.dto.AddReservationDto;
 import io.extact.msa.rms.application.external.dto.ReservationDto;

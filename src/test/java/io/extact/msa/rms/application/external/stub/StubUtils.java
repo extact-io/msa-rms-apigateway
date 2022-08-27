@@ -1,6 +1,6 @@
 package io.extact.msa.rms.application.external.stub;
 
-import javax.enterprise.inject.spi.CDI;
+import jakarta.enterprise.inject.spi.CDI;
 
 public class StubUtils {
     public static void refreshData() {

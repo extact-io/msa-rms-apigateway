@@ -34,12 +34,12 @@ class ApplicationDependencyArchUnitTest {
                                 "org.eclipse.microprofile.jwt..",
                                 "org.eclipse.microprofile.openapi..",
                                 "org.eclipse.microprofile.rest.client..",
-                                "javax.annotation..",
-                                "javax.inject..",
-                                "javax.enterprise.context..",
-                                "javax.enterprise.inject..",
-                                "javax.validation..",
-                                "javax.ws.rs..",
+                                "jakarta.annotation..",
+                                "jakarta.inject..",
+                                "jakarta.enterprise.context..",
+                                "jakarta.enterprise.inject..",
+                                "jakarta.validation..",
+                                "jakarta.ws.rs..",
                                 "java.."
                             )
                             // https://github.com/TNG/ArchUnit/issues/183 による配列型の個別追加
@@ -63,9 +63,9 @@ class ApplicationDependencyArchUnitTest {
                                 "io.extact.msa.rms.application..",
                                 "org.apache.commons.lang3..",
                                 "org.slf4j..",
-                                "javax.inject..",
-                                "javax.enterprise.context..",
-                                "javax.enterprise.event..",
+                                "jakarta.inject..",
+                                "jakarta.enterprise.context..",
+                                "jakarta.enterprise.event..",
                                 "java.."
                             )
                             // https://github.com/TNG/ArchUnit/issues/183 による配列型の個別追加
@@ -90,9 +90,9 @@ class ApplicationDependencyArchUnitTest {
                                 "org.apache.commons.lang3..",
                                 "org.slf4j..",
                                 "org.eclipse.microprofile.rest.client..",
-                                "javax.inject..",
-                                "javax.enterprise.context..",
-                                "javax.ws..",
+                                "jakarta.inject..",
+                                "jakarta.enterprise.context..",
+                                "jakarta.ws..",
                                 "java.."
                             )
                             // https://github.com/TNG/ArchUnit/issues/183 による配列型の個別追加
@@ -114,7 +114,7 @@ class ApplicationDependencyArchUnitTest {
                                 "io.extact.msa.rms.platform.fw.domain..",
                                 "io.extact.msa.rms.application.model..",
                                 "org.apache.commons.lang3..",
-                                "javax.validation..",
+                                "jakarta.validation..",
                                 "java.."
                                 );
 }
