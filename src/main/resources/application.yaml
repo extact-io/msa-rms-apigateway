@@ -2,6 +2,8 @@
 #server.port: 8888
 #jwt.filter.enable: false
 
+health.timeout-millis: 30000 # for Helidon MicroProfile Health
+
 service.url:
   item: http://localhost:7002
   reservation: http://localhost:7003
@@ -24,6 +26,14 @@ external:
   apiType: real
 
 main.manifest.jar: msa-rms-application\.jar$
+
+healthCheck:
+  otherChecks:
+    - io.extact.msa.rms.platform.core.health.RestServerReadnessCheck
+  restServerReadnessCheck.probe.url:
+    - ${service.url.item}
+    - ${service.url.reservation}
+    - ${service.url.user}
 
 jwt.claim:
   issuer: RentalReservationSystem
