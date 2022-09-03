@@ -29,8 +29,8 @@ main.manifest.jar: msa-rms-application\.jar$
 
 healthCheck:
   otherChecks:
-    - io.extact.msa.rms.platform.core.health.RestServerReadnessCheck
-  restServerReadnessCheck.probe.url:
+    - io.extact.msa.rms.platform.core.health.RestServersReadnessCheck
+  restServersReadnessCheck.probe.url:
     - ${service.url.item}
     - ${service.url.reservation}
     - ${service.url.user}
