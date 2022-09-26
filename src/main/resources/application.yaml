@@ -1,9 +1,10 @@
-#config_ordinal: 201
-#server.port: 8888
-#jwt.filter.enable: false
+openapi.info:
+  title: レンタル予約システム公開API
+
 
 health.timeout-millis: 30000 # for Helidon MicroProfile Health
 
+# 環境変数で上書きされることを前提にしているので個別定義
 service.url:
   item: http://localhost:7002
   reservation: http://localhost:7003
@@ -29,8 +30,8 @@ main.manifest.jar: msa-rms-application\.jar$
 
 healthCheck:
   otherChecks:
-    - io.extact.msa.rms.platform.core.health.RestServersReadnessCheck
-  restServersReadnessCheck.probe.url:
+    - io.extact.msa.rms.platform.core.health.ReadnessOfOutboundServersHealthCheck
+  readnessOfOutboundServersHealthCheck.probe.url:
     - ${service.url.item}
     - ${service.url.reservation}
     - ${service.url.user}
@@ -47,7 +48,7 @@ configdump:
   filters:
     #- filter: security
     - filter: server
-    #- filter: javax
+    #- filter: jakarta
     #- filter: cors
     #- filter: csv
     #- filter: persistence
