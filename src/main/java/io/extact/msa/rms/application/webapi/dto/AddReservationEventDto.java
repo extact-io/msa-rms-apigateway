@@ -21,11 +21,11 @@ import lombok.Setter;
 @Getter @Setter
 public class AddReservationEventDto implements BeforeAfterDateTimeValidatable {
 
-    @Schema(required = true, ref = "#/components/schemas/localDateTime")
+    @Schema(required = true)
     @ReserveStartDateTimeFuture(groups = Add.class)
     private LocalDateTime startDateTime;
 
-    @Schema(required = true, ref = "#/components/schemas/localDateTime")
+    @Schema(required = true)
     @ReserveEndDateTime
     private LocalDateTime endDateTime;
 

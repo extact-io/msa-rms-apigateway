@@ -1,22 +1,33 @@
-openapi.info:
-  title: レンタル予約システム公開API
+#----------------------------------
+# Defined for each environment
+#----------------------------------
+rms:
+  server.port: 7001
 
-
-health.timeout-millis: 30000 # for Helidon MicroProfile Health
-
-# 環境変数で上書きされることを前提にしているので個別定義
 service.url:
   item: http://localhost:7002
   reservation: http://localhost:7003
   user: http://localhost:7004
 
 #----------------------------------
-# rmsApplications Configurations
+# Helidon Configurations
 #----------------------------------
+server:
+  port: ${rms.server.port}
+  static.classpath:
+    location: "/pages"
+    context: /static
+    welcome: redoc.html
+  access-log:
+    format: "%t %h %r %s %b %D"
+
 web-api-item/mp-rest/url: ${service.url.item}
 web-api-reservation/mp-rest/url: ${service.url.reservation}
 web-api-user/mp-rest/url: ${service.url.user}
 
+#----------------------------------
+# rmsApplications Configurations
+#----------------------------------
 configuredCdi:
   register:
     - class: io.extact.msa.rms.platform.core.jwt.impl.jose4j.Jose4jJwtGenerator
@@ -35,6 +46,11 @@ healthCheck:
     - ${service.url.item}
     - ${service.url.reservation}
     - ${service.url.user}
+
+health.timeout-millis: 30000 # for Helidon MicroProfile Health
+
+openapi.info:
+  title: レンタル予約システム公開API
 
 jwt.claim:
   issuer: RentalReservationSystem

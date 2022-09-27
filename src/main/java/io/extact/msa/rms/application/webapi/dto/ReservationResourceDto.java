@@ -25,11 +25,11 @@ public class ReservationResourceDto implements BeforeAfterDateTimeValidatable {
     private Integer id;
 
     @ReserveStartDateTime
-    @Schema(required = true, ref = "#/components/schemas/localDateTime")
+    @Schema(required = true)
     private LocalDateTime startDateTime;
 
     @ReserveEndDateTime
-    @Schema(required = true, ref = "#/components/schemas/localDateTime")
+    @Schema(required = true)
     private LocalDateTime endDateTime;
 
     @Schema(required = false)
