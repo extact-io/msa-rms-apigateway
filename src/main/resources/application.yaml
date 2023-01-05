@@ -37,7 +37,7 @@ configuredCdi:
 external:
   apiType: real
 
-main.manifest.jar: msa-rms-application\.jar$
+main.manifest.jar: msa-rms-apigateway\.jar$
 
 healthCheck:
   otherChecks:

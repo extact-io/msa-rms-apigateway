@@ -29,7 +29,7 @@ fi
 #-----------------------
 POM_DIR="msa-rms-parent"
 PLATFORM_DIR="msa-rms-platform"
-APP_DIR="msa-rms-application"
+GW_DIR="msa-rms-apigateway"
 ITEM_DIR="msa-rms-service-item"
 RSV_DIR="msa-rms-service-reservation"
 USER_DIR="msa-rms-service-user"
@@ -54,7 +54,7 @@ install() {
 install-all() {
   install $1
   CMD=$INSTALL_CMD$1
-  cd "../${APP_DIR}"
+  cd "../${GW_DIR}"
   execute_cmd "${CMD}"
   cd "../${ITEM_DIR}"
   execute_cmd "${CMD}"
@@ -66,7 +66,7 @@ install-all() {
 
 package() {
   CMD=$PACKAGE_CMD$1
-  cd "../${APP_DIR}"
+  cd "../${GW_DIR}"
   execute_cmd "${CMD}"
   cd "../${ITEM_DIR}"
   execute_cmd "${CMD}"
@@ -83,7 +83,7 @@ install-package() {
 
 image() {
   CMD=$IMAGE_CMD$1
-  cd "../${APP_DIR}"
+  cd "../${GW_DIR}"
   execute_cmd "${CMD}"
   cd "../${ITEM_DIR}"
   execute_cmd "${CMD}"
