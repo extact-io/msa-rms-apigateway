@@ -16,7 +16,7 @@ import io.extact.msa.rms.platform.test.stub.dto.AddRentalItemStubDto;
 import io.extact.msa.rms.platform.test.stub.dto.RentalItemStubDto;
 
 @ApplicationScoped
-@Path("/items")
+@Path("items")
 public class RentalItemApiRemoteStub implements RentalItemApiRestClient {
 
     private RentalItemMemoryStub stub = new RentalItemMemoryStub();

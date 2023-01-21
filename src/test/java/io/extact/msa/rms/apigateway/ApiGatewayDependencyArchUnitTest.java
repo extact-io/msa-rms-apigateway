@@ -31,6 +31,7 @@ class ApiGatewayDependencyArchUnitTest {
                                 "io.extact.msa.rms.apigateway..",
                                 "org.apache.commons.lang3..",
                                 "org.slf4j..",
+                                "org.eclipse.microprofile.auth..",
                                 "org.eclipse.microprofile.jwt..",
                                 "org.eclipse.microprofile.openapi..",
                                 "org.eclipse.microprofile.rest.client..",

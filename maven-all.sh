@@ -5,7 +5,6 @@
 export DEBUG_SLEEP_ENABLE=false
 export DEBUG_SLEEP_TIME=1000
 export JWT_FILTER_ENABLE=true
-export SERVER_STATIC_PATH_LOCATION=C:/VSCode_workspaces/rms-ui-react/build
 
 #-----------------------
 # define command

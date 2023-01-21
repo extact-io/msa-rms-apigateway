@@ -22,9 +22,9 @@ import io.extact.msa.rms.apigateway.model.RentalItemModel;
 import io.extact.msa.rms.apigateway.model.ReservationModel;
 import io.extact.msa.rms.apigateway.service.event.DeleteRentalItemEvent;
 import io.extact.msa.rms.apigateway.service.event.DeleteUserAccountEvent;
-import io.extact.msa.rms.platform.core.jwt.login.LoginUserUtils;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException.CauseType;
+import io.extact.msa.rms.platform.fw.login.LoginUserUtils;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 

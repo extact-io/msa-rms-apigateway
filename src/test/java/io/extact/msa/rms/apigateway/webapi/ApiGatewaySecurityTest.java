@@ -64,15 +64,21 @@ class ApiGatewaySecurityTest {
     private static final Logger LOG = LoggerFactory.getLogger(ApiGatewaySecurityTest.class);
     private static String authHeaderValue;
 
-    private ApiGatewayResource endPoint;
+    private ApiGatewayResource gatewayResource;
+    private LoginResource loginResource;
 
     @BeforeEach
     void setup() throws Exception {
-        this.endPoint = RestClientBuilder.newBuilder()
-                .baseUri(new URI("http://localhost:7001/rms"))
-                .register(RmsTypeParameterFeature.class)
+        this.gatewayResource = RestClientBuilder.newBuilder()
+                .baseUri(new URI("http://localhost:7001/api/rms"))
                 .register(JwtRoleSenderClientFilter.class)
+                .register(RmsTypeParameterFeature.class)
                 .build(ApiGatewayResource.class);
+        loginResource = RestClientBuilder.newBuilder()
+                .baseUri(new URI("http://localhost:7001/auth/login"))
+                .register(JwtRoleSenderClientFilter.class)
+                .register(RmsTypeParameterFeature.class)
+                .build(LoginResource.class);
     }
 
     @AfterEach
@@ -107,126 +113,126 @@ class ApiGatewaySecurityTest {
 
         WebApplicationException actual = null;
         actual = catchThrowableOfType(() ->
-                    endPoint.findReservationByRentalItemAndStartDate(3, LocalDate.of(2020, 4, 1)),
+                    gatewayResource.findReservationByRentalItemAndStartDate(3, LocalDate.of(2020, 4, 1)),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.findReservationByReserverId(1),
+                    gatewayResource.findReservationByReserverId(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.getOwnReservations(),
+                    gatewayResource.getOwnReservations(),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.findReservationByRentalItemId(1),
+                    gatewayResource.findReservationByRentalItemId(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.findCanRentedItemAtTerm(LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0)),
+                    gatewayResource.findCanRentedItemAtTerm(LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0)),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.canRentedItemAtTerm(3, LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0)),
+                    gatewayResource.canRentedItemAtTerm(3, LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0)),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.getAllRentalItems(),
+                    gatewayResource.getAllRentalItems(),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.getAllReservations(),
+                    gatewayResource.getAllReservations(),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.getAllUserAccounts(),
+                    gatewayResource.getAllUserAccounts(),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.addReservation(newAddReservationDto()),
+                    gatewayResource.addReservation(newAddReservationDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.addRentalItem(newAddRentalItemDto()),
+                    gatewayResource.addRentalItem(newAddRentalItemDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.addUserAccount(newAddUserAccountDto()),
+                    gatewayResource.addUserAccount(newAddUserAccountDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.updateRentalItem(newRentalItemResourceDto()),
+                    gatewayResource.updateRentalItem(newRentalItemResourceDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.updateReservation(newReservationResourceDto()),
+                    gatewayResource.updateReservation(newReservationResourceDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.updateUserAccount(newUserAccountResourceDto()),
+                    gatewayResource.updateUserAccount(newUserAccountResourceDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.deleteRentalItem(1),
+                    gatewayResource.deleteRentalItem(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.deleteReservation(1),
+                    gatewayResource.deleteReservation(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.deleteUserAccount(1),
+                    gatewayResource.deleteUserAccount(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.cancelReservation(1),
+                    gatewayResource.cancelReservation(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.getOwnUserProfile(),
+                    gatewayResource.getOwnUserProfile(),
                     WebApplicationException.class);
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.updateUserProfile(newUserAccountResourceDto()),
+                    gatewayResource.updateUserProfile(newUserAccountResourceDto()),
                     WebApplicationException.class);
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
     }
@@ -236,105 +242,105 @@ class ApiGatewaySecurityTest {
 
         // as MEMBER
         assertThatCode(() -> {
-                endPoint.authenticate("member1", "member1");
-                endPoint.findReservationByRentalItemAndStartDate(3, LocalDate.of(2020, 4, 1));
-                endPoint.findReservationByReserverId(1);
-                endPoint.getOwnReservations();
-                endPoint.getAllRentalItems();
-                endPoint.findReservationByRentalItemId(1);
-                endPoint.findCanRentedItemAtTerm(LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0));
-                endPoint.canRentedItemAtTerm(3, LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0));
-                endPoint.addReservation(newAddReservationDto());
-                endPoint.cancelReservation(4); // data of addReservation()
-                endPoint.getOwnUserProfile();
-                endPoint.updateUserProfile(newUserAccountResourceDto());
+                loginResource.authenticate("member1", "member1");
+                gatewayResource.findReservationByRentalItemAndStartDate(3, LocalDate.of(2020, 4, 1));
+                gatewayResource.findReservationByReserverId(1);
+                gatewayResource.getOwnReservations();
+                gatewayResource.getAllRentalItems();
+                gatewayResource.findReservationByRentalItemId(1);
+                gatewayResource.findCanRentedItemAtTerm(LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0));
+                gatewayResource.canRentedItemAtTerm(3, LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0));
+                gatewayResource.addReservation(newAddReservationDto());
+                gatewayResource.cancelReservation(4); // data of addReservation()
+                gatewayResource.getOwnUserProfile();
+                gatewayResource.updateUserProfile(newUserAccountResourceDto());
         }).doesNotThrowAnyException();
 
         // as ADMIN
         assertThatCode(() -> {
-                endPoint.authenticate("admin", "admin");
-                endPoint.addRentalItem(newAddRentalItemDto());
-                endPoint.addUserAccount(newAddUserAccountDto());
-                endPoint.getAllRentalItems();
-                endPoint.getAllReservations();
-                endPoint.getAllUserAccounts();
-                endPoint.updateRentalItem(newRentalItemResourceDto());
-                endPoint.updateReservation(newReservationResourceDto());
-                endPoint.updateUserAccount(newUserAccountResourceDto());
-                endPoint.deleteRentalItem(1);
-                endPoint.deleteReservation(1);
+                loginResource.authenticate("admin", "admin");
+                gatewayResource.addRentalItem(newAddRentalItemDto());
+                gatewayResource.addUserAccount(newAddUserAccountDto());
+                gatewayResource.getAllRentalItems();
+                gatewayResource.getAllReservations();
+                gatewayResource.getAllUserAccounts();
+                gatewayResource.updateRentalItem(newRentalItemResourceDto());
+                gatewayResource.updateReservation(newReservationResourceDto());
+                gatewayResource.updateUserAccount(newUserAccountResourceDto());
+                gatewayResource.deleteRentalItem(1);
+                gatewayResource.deleteReservation(1);
                 var updateDto = newUserAccountResourceDto();
                 updateDto.setId(3);
                 updateDto.setLoginId("member3");
-                endPoint.getOwnUserProfile();
-                endPoint.updateUserProfile(updateDto);
-                endPoint.deleteUserAccount(3);
+                gatewayResource.getOwnUserProfile();
+                gatewayResource.updateUserProfile(updateDto);
+                gatewayResource.deleteUserAccount(3);
         }).doesNotThrowAnyException();
     }
 
     @Test
     void testDenyRolesAsMember() {
 
-        endPoint.authenticate("member1", "member1"); // as MEMBER
+        loginResource.authenticate("member1", "member1"); // as MEMBER
 
         // methods that MEMBER can't call
         WebApplicationException actual = null;
         actual = catchThrowableOfType(() ->
-                    endPoint.addRentalItem(newAddRentalItemDto()),
+                    gatewayResource.addRentalItem(newAddRentalItemDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.addUserAccount(newAddUserAccountDto()),
+                    gatewayResource.addUserAccount(newAddUserAccountDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.getAllReservations(),
+                    gatewayResource.getAllReservations(),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.getAllUserAccounts(),
+                    gatewayResource.getAllUserAccounts(),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.updateRentalItem(newRentalItemResourceDto()),
+                    gatewayResource.updateRentalItem(newRentalItemResourceDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.updateReservation(newReservationResourceDto()),
+                    gatewayResource.updateReservation(newReservationResourceDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.updateUserAccount(newUserAccountResourceDto()),
+                    gatewayResource.updateUserAccount(newUserAccountResourceDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.deleteRentalItem(1),
+                    gatewayResource.deleteRentalItem(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.deleteReservation(1),
+                    gatewayResource.deleteReservation(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.deleteUserAccount(1),
+                    gatewayResource.deleteUserAccount(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
@@ -343,54 +349,54 @@ class ApiGatewaySecurityTest {
     @Test
     void testDenyRolesAsAdmin() {
 
-        endPoint.authenticate("admin", "admin"); // as ADMIN
+        loginResource.authenticate("admin", "admin"); // as ADMIN
 
         // methods that ADMIN can't call
         WebApplicationException actual = null;
         actual = catchThrowableOfType(() ->
-                    endPoint.findReservationByRentalItemAndStartDate(3, LocalDate.of(2020, 4, 1)),
+                    gatewayResource.findReservationByRentalItemAndStartDate(3, LocalDate.of(2020, 4, 1)),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.findReservationByReserverId(1),
+                    gatewayResource.findReservationByReserverId(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.getOwnReservations(),
+                    gatewayResource.getOwnReservations(),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.findReservationByRentalItemId(1),
+                    gatewayResource.findReservationByRentalItemId(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.findCanRentedItemAtTerm(LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0)),
+                    gatewayResource.findCanRentedItemAtTerm(LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0)),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.canRentedItemAtTerm(3, LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0)),
+                    gatewayResource.canRentedItemAtTerm(3, LocalDateTime.of(2021, 4, 1, 12, 0), LocalDateTime.of(2021, 4, 1, 13, 0)),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.addReservation(newAddReservationDto()),
+                    gatewayResource.addReservation(newAddReservationDto()),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
 
         actual = catchThrowableOfType(() ->
-                    endPoint.cancelReservation(1),
+                    gatewayResource.cancelReservation(1),
                     WebApplicationException.class
                     );
         assertThat(actual.getResponse().getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());

@@ -16,7 +16,7 @@ import io.extact.msa.rms.platform.test.stub.dto.AddUserAccountStubDto;
 import io.extact.msa.rms.platform.test.stub.dto.UserAccountStubDto;
 
 @ApplicationScoped
-@Path("/users")
+@Path("users")
 public class UserAccountApiRemoteStub implements UserAccountApiRestClient {
 
     private UserAccountMemoryStub stub = new UserAccountMemoryStub();

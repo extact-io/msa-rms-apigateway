@@ -24,11 +24,11 @@ import io.extact.msa.rms.apigateway.external.stub.UserAccountApiRemoteStub;
 import io.extact.msa.rms.apigateway.model.RentalItemModel;
 import io.extact.msa.rms.apigateway.model.ReservationModel;
 import io.extact.msa.rms.apigateway.model.UserAccountModel;
-import io.extact.msa.rms.platform.core.jwt.login.LoginUserUtils;
-import io.extact.msa.rms.platform.core.jwt.login.ServiceLoginUser;
 import io.extact.msa.rms.platform.fw.domain.vo.UserType;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException.CauseType;
+import io.extact.msa.rms.platform.fw.login.LoginUser;
+import io.extact.msa.rms.platform.fw.login.LoginUserUtils;
 import io.extact.msa.rms.test.junit5.JulToSLF4DelegateExtension;
 import io.extact.msa.rms.test.utils.ClearOpenTelemetryContextCdiExtension;
 import io.helidon.microprofile.tests.junit5.AddBean;
@@ -201,8 +201,17 @@ class ReservationGwServiceTest {
     @Test
     void testCancel() {
         try {
-            var invokeMethod = ReflectionUtils.findMethod(LoginUserUtils.class, "set", ServiceLoginUser.class).get();
-            ReflectionUtils.invokeMethod(invokeMethod, null, ServiceLoginUser.of(2, Set.of("dummy"))); // set LoginUesr.
+            var invokeMethod = ReflectionUtils.findMethod(LoginUserUtils.class, "set", LoginUser.class).get();
+            ReflectionUtils.invokeMethod(invokeMethod, null, new LoginUser() {
+                @Override
+                public int getUserId() {
+                    return 2;
+                }
+                @Override
+                public Set<String> getGroups() {
+                    return Set.of("dummy");
+                }}
+            ); // set LoginUesr.
             reservationService.cancel(2);
         } finally {
             LoginUserUtils.remove(); // ThreadLocalを使ってるので自分で後始末

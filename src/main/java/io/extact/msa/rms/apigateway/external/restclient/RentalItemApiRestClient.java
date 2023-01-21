@@ -20,14 +20,14 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import io.extact.msa.rms.apigateway.external.dto.AddRentalItemDto;
 import io.extact.msa.rms.apigateway.external.dto.RentalItemDto;
 import io.extact.msa.rms.platform.core.jaxrs.converter.RmsTypeParameterFeature;
-import io.extact.msa.rms.platform.core.jwt.client.PropagateLoginClientHeadersFactory;
-import io.extact.msa.rms.platform.fw.webapi.client.ExceptionPropagateClientMapper;
+import io.extact.msa.rms.platform.fw.external.PropagateLoginUserClientHeadersFactory;
+import io.extact.msa.rms.platform.fw.external.PropagateResponseExceptionMapper;
 
 @RegisterRestClient(configKey = "web-api-item")
 @RegisterProvider(RmsTypeParameterFeature.class)
-@RegisterProvider(ExceptionPropagateClientMapper.class)
-@RegisterClientHeaders(PropagateLoginClientHeadersFactory.class)
-@Path("/items")
+@RegisterProvider(PropagateResponseExceptionMapper.class)
+@RegisterClientHeaders(PropagateLoginUserClientHeadersFactory.class)
+@Path("api/items")
 public interface RentalItemApiRestClient {
 
     @GET

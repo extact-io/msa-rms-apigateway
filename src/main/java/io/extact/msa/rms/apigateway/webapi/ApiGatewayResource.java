@@ -4,26 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.enums.ParameterIn;
-import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
-import org.eclipse.microprofile.openapi.annotations.media.Content;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
-import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
-import io.extact.msa.rms.apigateway.webapi.dto.AddRentalItemEventDto;
-import io.extact.msa.rms.apigateway.webapi.dto.AddReservationEventDto;
-import io.extact.msa.rms.apigateway.webapi.dto.AddUserAccountEventDto;
-import io.extact.msa.rms.apigateway.webapi.dto.LoginEventDto;
-import io.extact.msa.rms.apigateway.webapi.dto.RentalItemResourceDto;
-import io.extact.msa.rms.apigateway.webapi.dto.ReservationResourceDto;
-import io.extact.msa.rms.apigateway.webapi.dto.UserAccountResourceDto;
-import io.extact.msa.rms.platform.fw.domain.constraint.LoginId;
-import io.extact.msa.rms.platform.fw.domain.constraint.Passowrd;
-import io.extact.msa.rms.platform.fw.domain.constraint.RmsId;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.Consumes;
@@ -37,6 +18,24 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.ParameterIn;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+import io.extact.msa.rms.apigateway.webapi.dto.AddRentalItemEventDto;
+import io.extact.msa.rms.apigateway.webapi.dto.AddReservationEventDto;
+import io.extact.msa.rms.apigateway.webapi.dto.AddUserAccountEventDto;
+import io.extact.msa.rms.apigateway.webapi.dto.RentalItemResourceDto;
+import io.extact.msa.rms.apigateway.webapi.dto.ReservationResourceDto;
+import io.extact.msa.rms.apigateway.webapi.dto.UserAccountResourceDto;
+import io.extact.msa.rms.platform.fw.domain.constraint.RmsId;
+
 /**
  * レンタル予約システムのREST APIインタフェース。
  * MicroProfileのOpenAPIのアノテーションを使いAPIの詳細情報を付加している。<br>
@@ -49,35 +48,10 @@ public interface ApiGatewayResource {
     public static final String MEMBER_ROLE = "MEMBER";
 
     @GET
-    @Path("/login")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Tag(name = "Authenticate")
-    @Operation(operationId = "authenticateForTest", summary = "ユーザ認証を行う（curlのテスト用）", description = "ログイン名とパスワードに一致するユーザを取得する")
-    @Parameter(name = "loginId", description = "ログインId", required = true, schema = @Schema(implementation = String.class, minLength = 5, maxLength = 10))
-    @Parameter(name = "password", description = "パスワード", required = true, schema = @Schema(implementation = String.class, minLength = 5, maxLength = 10))
-    @APIResponse(responseCode = "200", description = "認証成功", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserAccountResourceDto.class)))
-    @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
-    @APIResponse(responseCode = "404", ref = "#/components/responses/NotFound")
-    @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
-    UserAccountResourceDto authenticate(@LoginId @QueryParam("loginId") String loginId,
-            @Passowrd @QueryParam("password") String password);
-
-    @POST
-    @Path("/login")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Tag(name = "Authenticate")
-    @Operation(operationId = "authenticate", summary = "ユーザ認証を行う", description = "ログイン名とパスワードに一致するユーザを取得する")
-    @Parameter(name = "loginDto", description = "ログインIDとパスワード", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoginEventDto.class)))
-    @APIResponse(responseCode = "200", description = "認証成功", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserAccountResourceDto.class)))
-    @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
-    @APIResponse(responseCode = "404", ref = "#/components/responses/NotFound")
-    @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
-    UserAccountResourceDto authenticate(@Valid LoginEventDto loginDto);
-
-    @GET
     @Path("/reservations/item/{itemId}/startdate/{startDate}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(MEMBER_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "findReservationByRentalItemAndStartDate", summary = "指定されたレンタル品と利用開始日で予約を検索する", description = "指定されたレンタル品と利用開始日に一致する予約を検索する")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -92,6 +66,8 @@ public interface ApiGatewayResource {
     @GET
     @Path("/reservations/reserver/{reserverId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(MEMBER_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "findReservationByReserverId", summary = "指定されたユーザが予約者の予約を検索する", description = "指定されたユーザが予約者の予約を検索する")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -104,6 +80,8 @@ public interface ApiGatewayResource {
     @GET
     @Path("/reservations/own")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(MEMBER_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "getOwnReservations", summary = "自分の予約一覧を取得する", description = "ログインユーザが予約者となっている予約の一覧を取得する。このAPIは/reservations/reserver/{reserverId}のエイリアスとなっている")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -114,6 +92,8 @@ public interface ApiGatewayResource {
     @GET
     @Path("/items")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({ MEMBER_ROLE, ADMIN_ROLE })
+    //--- for OpenAPI
     @Tag(name = "Member")
     @Tag(name = "Admin")
     @Operation(operationId = "getAllRentalItems", summary = "レンタル品の全件を取得する", description = "登録されているすべてのレンタル品を取得する")
@@ -125,6 +105,8 @@ public interface ApiGatewayResource {
     @Path("/reservations")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(MEMBER_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "addReservation", summary = "レンタル品を予約する", description = "予約対象のレンタル品が存在しない場合は404を予定期間に別の予約が既に入っている場合は409を返す")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -138,6 +120,8 @@ public interface ApiGatewayResource {
 
     @DELETE
     @Path("/reservations/own/{reservationId}")
+    @RolesAllowed(MEMBER_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "cancelReservation", summary = "予約をキャンセルする", description = "依頼された予約IDに対する予約をキャンセルする。予約のキャンセルは予約した人しか行えない。"
             + "他の人が予約キャンセルを行った場合は禁止操作としてエラーにする")
@@ -153,6 +137,8 @@ public interface ApiGatewayResource {
     @GET
     @Path("/reservations/item/{itemId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(MEMBER_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "findReservationByRentalItemId", summary = "指定されたレンタル品に対する予約を検索する", description = "指定されたレンタル品に対する予約を検索する")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -165,6 +151,8 @@ public interface ApiGatewayResource {
     @GET
     @Path("/items/rentable")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(MEMBER_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "findCanRentedItemAtTerm", summary = "該当期間に予約可能なレンタル品を検索する", description = "該当期間に予約可能なレンタル品を検索する")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -178,6 +166,8 @@ public interface ApiGatewayResource {
     @GET
     @Path("/items/{itemId}/rentable")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(MEMBER_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "canRentedItemAtTerm", summary = "レンタル品が該当期間に予約可能かを返す", description = "レンタル品が該当期間に予約可能かを返す")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -194,6 +184,8 @@ public interface ApiGatewayResource {
     @Path("/items")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(ADMIN_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "addRentalItem", summary = "レンタル品を登録する", description = "シリアル番号が既に使われている場合は409を返す")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -208,6 +200,8 @@ public interface ApiGatewayResource {
     @Path("/items")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(ADMIN_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "updateRentalItem", summary = "レンタル品を更新する", description = "依頼されたレンタル品を更新する")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -220,6 +214,8 @@ public interface ApiGatewayResource {
 
     @DELETE
     @Path("/items/{itemId}")
+    @RolesAllowed(ADMIN_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "deleteRentalItem", summary = "レンタル品を削除する", description = "削除対象のレンタル品を参照する予約が存在する場合は削除は行わずエラーにする")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -234,6 +230,8 @@ public interface ApiGatewayResource {
     @GET
     @Path("/reservations")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(ADMIN_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "getAllReservations", summary = "予約の全件を取得する", description = "登録されているすべての予約を取得する")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -244,6 +242,8 @@ public interface ApiGatewayResource {
     @Path("/reservations")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(ADMIN_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "updateReservation", summary = "予約を更新する", description = "依頼された予約を更新する。ユーザアカウントとレンタル品のエンティティは更新時に使用していないためIDのみ設定すればよい")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -256,6 +256,8 @@ public interface ApiGatewayResource {
 
     @DELETE
     @Path("/reservations/{reservationId}")
+    @RolesAllowed(ADMIN_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "deleteReservation", summary = "予約を削除する", description = "予約を削除する")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -269,6 +271,8 @@ public interface ApiGatewayResource {
     @GET
     @Path("/users")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(ADMIN_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "getAllUserAccounts", summary = "ユーザの全件を取得する", description = "登録されているすべてのユーザを取得する")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -279,6 +283,8 @@ public interface ApiGatewayResource {
     @Path("/users")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(ADMIN_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "addUserAccount", summary = "ユーザを登録する", description = "ログインIDが既に使われている場合は409を返す")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -293,6 +299,8 @@ public interface ApiGatewayResource {
     @Path("/users")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed(ADMIN_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "updateUserAccount", summary = "ユーザを更新する", description = "依頼されたユーザを更新する")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -305,6 +313,8 @@ public interface ApiGatewayResource {
 
     @DELETE
     @Path("/users/{userAccountId}")
+    @RolesAllowed(ADMIN_ROLE)
+    //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "deleteUserAccount", summary = "ユーザを削除する", description = "削除対象のユーザを参照する予約が存在する場合は削除は行わずエラーにする")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -320,6 +330,8 @@ public interface ApiGatewayResource {
     @Path("/users/own")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({ MEMBER_ROLE, ADMIN_ROLE })
+    //--- for OpenAPI
     @Tag(name = "Common")
     @Operation(operationId = "getOwnUserProfile", summary = "自分のプロファイル情報を取得する", description = "ログインしているユーザ自身のプロファイル情報を返す")
     @SecurityRequirement(name = "RmsJwtAuth")
@@ -332,6 +344,8 @@ public interface ApiGatewayResource {
     @Path("/users/own")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({ MEMBER_ROLE, ADMIN_ROLE })
+    //--- for OpenAPI
     @Tag(name = "Common")
     @Operation(operationId = "updateUserProfile", summary = "自分のプロファイル情報を更新する", description = "自分以外の情報を更新しようとした場合は禁止操作として403を返す")
     @SecurityRequirement(name = "RmsJwtAuth")

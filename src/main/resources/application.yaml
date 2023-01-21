@@ -30,9 +30,8 @@ web-api-user/mp-rest/url: ${service.url.user}
 #----------------------------------
 configuredCdi:
   register:
-    - class: io.extact.msa.rms.platform.core.jwt.impl.jose4j.Jose4jJwtGenerator
-    - class: io.extact.msa.rms.platform.core.jwt.impl.jose4j.Jose4jPrivateSecretedTokenValidator
-    - class: io.extact.msa.rms.platform.core.jwt.client.PropagateLoginClientHeadersFactory
+    - class: io.extact.msa.rms.platform.core.jwt.provider.impl.Auth0RsaJwtGenerator
+    - class: io.extact.msa.rms.platform.fw.external.PropagateJwtClientHeadersFactory
 
 external:
   apiType: real
@@ -41,8 +40,8 @@ main.manifest.jar: msa-rms-apigateway\.jar$
 
 healthCheck:
   otherChecks:
-    - io.extact.msa.rms.platform.core.health.ReadnessOfOutboundServersHealthCheck
-  readnessOfOutboundServersHealthCheck.probe.url:
+    - io.extact.msa.rms.platform.core.health.ReadinessOfOutboundServersHealthCheck
+  readinessOfOutboundServersHealthCheck.probe.url:
     - ${service.url.item}
     - ${service.url.reservation}
     - ${service.url.user}
@@ -52,8 +51,12 @@ health.timeout-millis: 30000 # for Helidon MicroProfile Health
 openapi.info:
   title: レンタル予約システム公開API
 
-jwt.claim:
-  issuer: RentalReservationSystem
+jwt:
+  privatekey.path: /jwt.key
+  claim.issuer: RentalReservationSystem
+mp.jwt.verify.publickey.location: /jwt.pub.key
+
+
 
 # Set when you want to filter the output.
 # Output the entire amount even if there is no configdump setting itself.

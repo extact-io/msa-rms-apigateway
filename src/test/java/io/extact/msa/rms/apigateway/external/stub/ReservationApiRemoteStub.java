@@ -17,7 +17,7 @@ import io.extact.msa.rms.platform.test.stub.dto.AddReservationStubDto;
 import io.extact.msa.rms.platform.test.stub.dto.ReservationStubDto;
 
 @ApplicationScoped
-@Path("/reservations")
+@Path("reservations")
 public class ReservationApiRemoteStub implements ReservationApiRestClient {
 
     private ReservationMemoryStub stub = new ReservationMemoryStub();
