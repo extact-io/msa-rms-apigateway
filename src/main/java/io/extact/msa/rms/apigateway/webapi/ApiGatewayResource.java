@@ -25,7 +25,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import io.extact.msa.rms.apigateway.webapi.dto.AddRentalItemEventDto;
@@ -54,7 +53,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "findReservationByRentalItemAndStartDate", summary = "指定されたレンタル品と利用開始日で予約を検索する", description = "指定されたレンタル品と利用開始日に一致する予約を検索する")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "itemId", description = "レンタル品ID", in = ParameterIn.PATH, required = true)
     @Parameter(name = "startDate", description = "利用開始日", in = ParameterIn.PATH, required = true, schema = @Schema(implementation = String.class, example = "20201230", format = "yyyyMMdd"))
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = ReservationResourceDto.class)))
@@ -70,7 +68,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "findReservationByReserverId", summary = "指定されたユーザが予約者の予約を検索する", description = "指定されたユーザが予約者の予約を検索する")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "reserverId", description = "ユーザID", in = ParameterIn.PATH, required = true)
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = ReservationResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -84,7 +81,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "getOwnReservations", summary = "自分の予約一覧を取得する", description = "ログインユーザが予約者となっている予約の一覧を取得する。このAPIは/reservations/reserver/{reserverId}のエイリアスとなっている")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = ReservationResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     List<ReservationResourceDto> getOwnReservations();
@@ -97,7 +93,6 @@ public interface ApiGatewayResource {
     @Tag(name = "Member")
     @Tag(name = "Admin")
     @Operation(operationId = "getAllRentalItems", summary = "レンタル品の全件を取得する", description = "登録されているすべてのレンタル品を取得する")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = RentalItemResourceDto.class)))
     List<RentalItemResourceDto> getAllRentalItems();
 
@@ -109,7 +104,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "addReservation", summary = "レンタル品を予約する", description = "予約対象のレンタル品が存在しない場合は404を予定期間に別の予約が既に入っている場合は409を返す")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "dto", description = "登録内容", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = AddReservationEventDto.class)))
     @APIResponse(responseCode = "200", description = "登録成功", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ReservationResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -125,7 +119,6 @@ public interface ApiGatewayResource {
     @Tag(name = "Member")
     @Operation(operationId = "cancelReservation", summary = "予約をキャンセルする", description = "依頼された予約IDに対する予約をキャンセルする。予約のキャンセルは予約した人しか行えない。"
             + "他の人が予約キャンセルを行った場合は禁止操作としてエラーにする")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "reservationId", description = "予約ID", in = ParameterIn.PATH, required = true)
     @APIResponse(responseCode = "200", description = "登録成功")
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -141,7 +134,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "findReservationByRentalItemId", summary = "指定されたレンタル品に対する予約を検索する", description = "指定されたレンタル品に対する予約を検索する")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "itemId", description = "レンタル品ID", in = ParameterIn.PATH, required = true)
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = ReservationResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -155,7 +147,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "findCanRentedItemAtTerm", summary = "該当期間に予約可能なレンタル品を検索する", description = "該当期間に予約可能なレンタル品を検索する")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "from", description = "利用開始日時", in = ParameterIn.QUERY, required = true, schema = @Schema(ref = "#/components/schemas/localDateTime"))
     @Parameter(name = "to", description = "利用開始日時", in = ParameterIn.QUERY, required = true, schema = @Schema(ref = "#/components/schemas/localDateTime"))
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = RentalItemResourceDto.class)))
@@ -170,7 +161,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Member")
     @Operation(operationId = "canRentedItemAtTerm", summary = "レンタル品が該当期間に予約可能かを返す", description = "レンタル品が該当期間に予約可能かを返す")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "itemId", description = "レンタル品ID", in = ParameterIn.PATH, required = true)
     @Parameter(name = "from", description = "利用開始日時", in = ParameterIn.QUERY, required = true, schema = @Schema(ref = "#/components/schemas/localDateTime"))
     @Parameter(name = "to", description = "利用開始日時", in = ParameterIn.QUERY, required = true, schema = @Schema(ref = "#/components/schemas/localDateTime"))
@@ -188,7 +178,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "addRentalItem", summary = "レンタル品を登録する", description = "シリアル番号が既に使われている場合は409を返す")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "dto", description = "登録内容", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = AddRentalItemEventDto.class)))
     @APIResponse(responseCode = "200", description = "登録成功", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RentalItemResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -204,7 +193,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "updateRentalItem", summary = "レンタル品を更新する", description = "依頼されたレンタル品を更新する")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "updateDto", description = "更新内容", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = RentalItemResourceDto.class)))
     @APIResponse(responseCode = "200", description = "登録成功", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RentalItemResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -218,7 +206,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "deleteRentalItem", summary = "レンタル品を削除する", description = "削除対象のレンタル品を参照する予約が存在する場合は削除は行わずエラーにする")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "itemId", description = "レンタル品ID", in = ParameterIn.PATH, required = true)
     @APIResponse(responseCode = "200", description = "登録成功")
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -234,7 +221,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "getAllReservations", summary = "予約の全件を取得する", description = "登録されているすべての予約を取得する")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = ReservationResourceDto.class)))
     List<ReservationResourceDto> getAllReservations();
 
@@ -246,7 +232,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "updateReservation", summary = "予約を更新する", description = "依頼された予約を更新する。ユーザアカウントとレンタル品のエンティティは更新時に使用していないためIDのみ設定すればよい")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "updateDto", description = "更新内容", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = ReservationResourceDto.class)))
     @APIResponse(responseCode = "200", description = "登録成功。IDに対するユーザアカウントとレンタル品のエンティティは設定されて返される", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ReservationResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -260,7 +245,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "deleteReservation", summary = "予約を削除する", description = "予約を削除する")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "reservationId", description = "予約ID", in = ParameterIn.PATH, required = true)
     @APIResponse(responseCode = "200", description = "登録成功")
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -275,7 +259,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "getAllUserAccounts", summary = "ユーザの全件を取得する", description = "登録されているすべてのユーザを取得する")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = UserAccountResourceDto.class)))
     List<UserAccountResourceDto> getAllUserAccounts();
 
@@ -287,7 +270,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "addUserAccount", summary = "ユーザを登録する", description = "ログインIDが既に使われている場合は409を返す")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "dto", description = "登録内容", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = AddUserAccountEventDto.class)))
     @APIResponse(responseCode = "200", description = "登録成功", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserAccountResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -303,7 +285,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "updateUserAccount", summary = "ユーザを更新する", description = "依頼されたユーザを更新する")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "dto", description = "更新内容", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserAccountResourceDto.class)))
     @APIResponse(responseCode = "200", description = "登録成功", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserAccountResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -317,7 +298,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Admin")
     @Operation(operationId = "deleteUserAccount", summary = "ユーザを削除する", description = "削除対象のユーザを参照する予約が存在する場合は削除は行わずエラーにする")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "userAccountId", description = "ユーザID", in = ParameterIn.PATH, required = true)
     @APIResponse(responseCode = "200", description = "登録成功")
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
@@ -334,7 +314,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Common")
     @Operation(operationId = "getOwnUserProfile", summary = "自分のプロファイル情報を取得する", description = "ログインしているユーザ自身のプロファイル情報を返す")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @APIResponse(responseCode = "200", description = "プロファイル情報", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserAccountResourceDto.class)))
     @APIResponse(responseCode = "404", ref = "#/components/responses/NotFound")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
@@ -348,7 +327,6 @@ public interface ApiGatewayResource {
     //--- for OpenAPI
     @Tag(name = "Common")
     @Operation(operationId = "updateUserProfile", summary = "自分のプロファイル情報を更新する", description = "自分以外の情報を更新しようとした場合は禁止操作として403を返す")
-    @SecurityRequirement(name = "RmsJwtAuth")
     @Parameter(name = "dto", description = "更新内容", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserAccountResourceDto.class)))
     @APIResponse(responseCode = "200", description = "登録成功", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserAccountResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")

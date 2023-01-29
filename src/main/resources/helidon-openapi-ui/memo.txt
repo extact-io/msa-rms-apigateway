@@ -1,0 +1,24 @@
+OpenApiUiFull
+ｰｰｰｰｰ
+public void update(Routing.Rules rules) {
+    if (!isEnabled()) {
+        return;
+    }
+    // Serve static content from the external UI component...
+    StaticContentSupport smallryeUiStaticSupport = StaticContentSupport.builder("META-INF/resources/openapi-ui") // (1)
+            .build();
+    // ...and from here.
+    StaticContentSupport helidonOpenApiUiStaticSupport = StaticContentSupport.builder("helidon-openapi-ui") // (2)
+            .build();
+    rules
+            .get(webContext() + "[/]", this::prepareTextResponseFromUiEndpoint)
+            .get(webContext() + "/index.html", this::displayIndex)
+            .register(webContext(), helidonOpenApiUiStaticSupport)
+            .register(webContext(), smallryeUiStaticSupport);
+}
+ｰｰｰｰｰ
+Helidon Serverのstaticパスを(1)と(2)を追加。
+(2)にないリソースは(1)にfallbackしている
+よって、(2)のhelidon-openapi-uiが優先
+staticパスは外部から変えることができないので、classpathが最優先される自分のアプリに/helidon-openapi-uiを作って
+上書きしたいリソースを配置している

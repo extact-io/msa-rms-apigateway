@@ -9,6 +9,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Path;
 
+import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
+
 import io.extact.msa.rms.apigateway.service.RentalItemGwService;
 import io.extact.msa.rms.apigateway.service.ReservationGwService;
 import io.extact.msa.rms.apigateway.service.UserAccountGwService;
@@ -26,6 +28,7 @@ import io.extact.msa.rms.platform.fw.exception.BusinessFlowException.CauseType;
 import io.extact.msa.rms.platform.fw.login.LoginUserUtils;
 
 @Path("rms")
+@SecurityRequirement(name = "RmsJwtAuth")
 @ValidateParam
 @ApplicationScoped
 public class ApiGatewayResourceImpl implements ApiGatewayResource {

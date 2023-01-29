@@ -14,16 +14,26 @@ service.url:
 #----------------------------------
 server:
   port: ${rms.server.port}
-  static.classpath:
-    location: "/pages"
-    context: /static
-    welcome: redoc.html
   access-log:
     format: "%t %h %r %s %b %D"
 
 web-api-item/mp-rest/url: ${service.url.item}
 web-api-reservation/mp-rest/url: ${service.url.reservation}
 web-api-user/mp-rest/url: ${service.url.user}
+
+openapi.ui:
+  options:
+    # see: https://github.com/helidon-io/helidon/issues/5998
+    # see: key is io.smallrye.openapi.ui.Option emum name
+    # see: value is https://ja.quarkus.io/guides/openapi-swaggerui#swagger-ui
+    displayOperationId: true
+    #title: RMS OpenAPI UI
+    #themeHref: theme-muted.css
+    #backHref: https://github.com/extact-io
+    #selfHref: https://github.com/extact-io
+
+tracing:
+  service: ApiGatewayApplication
 
 #----------------------------------
 # rmsApplications Configurations
@@ -54,7 +64,11 @@ openapi.info:
 jwt:
   privatekey.path: /jwt.key
   claim.issuer: RentalReservationSystem
-mp.jwt.verify.publickey.location: /jwt.pub.key
+mp:
+  jwt:
+    verify.publickey.location: /jwt.pub.key
+  openapi:
+    model.reader: io.extact.msa.rms.platform.fw.webapi.openapi.JwtAuthDecoratedModelReader
 
 
 
