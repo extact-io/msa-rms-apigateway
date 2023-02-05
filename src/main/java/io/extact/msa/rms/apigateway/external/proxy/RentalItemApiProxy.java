@@ -1,7 +1,5 @@
 package io.extact.msa.rms.apigateway.external.proxy;
 
-import static io.extact.msa.rms.apigateway.external.ApiType.*;
-
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -14,10 +12,8 @@ import io.extact.msa.rms.apigateway.external.RentalItemApi;
 import io.extact.msa.rms.apigateway.external.dto.AddRentalItemDto;
 import io.extact.msa.rms.apigateway.external.dto.RentalItemDto;
 import io.extact.msa.rms.apigateway.external.restclient.RentalItemApiRestClient;
-import io.extact.msa.rms.platform.core.extension.EnabledIfRuntimeConfig;
 
 @ApplicationScoped
-@EnabledIfRuntimeConfig(propertyName = PROP_NAME, value = REAL)
 public class RentalItemApiProxy implements RentalItemApi {
 
     private RentalItemApiRestClient client;

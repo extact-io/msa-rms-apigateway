@@ -1,6 +1,5 @@
 package io.extact.msa.rms.apigateway.service;
 
-import static io.extact.msa.rms.apigateway.external.ApiType.*;
 import static io.extact.msa.rms.test.assertj.ToStringAssert.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -35,7 +34,6 @@ import io.helidon.microprofile.tests.junit5.HelidonTest;
 @AddBean(ServiceApiRemoteStubApplication.class)
 @AddConfig(key = "server.port", value = "7001") // for REST server
 @AddConfig(key = "web-api/mp-rest/url", value = "http://localhost:7001") // for REST Client
-@AddConfig(key = PROP_NAME, value = REAL)
 @ExtendWith(JulToSLF4DelegateExtension.class)
 class RentalItemGwServiceTest {
 

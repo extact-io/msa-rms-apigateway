@@ -1,6 +1,5 @@
 package io.extact.msa.rms.apigateway.webapi;
 
-import static io.extact.msa.rms.apigateway.external.ApiType.*;
 import static io.extact.msa.rms.platform.test.PlatformTestUtils.*;
 import static io.extact.msa.rms.test.assertj.ToStringAssert.*;
 import static org.assertj.core.api.Assertions.*;
@@ -70,7 +69,6 @@ import lombok.ToString;
 @AddBean(ReservationApiRemoteStub.class)
 @AddBean(UserAccountApiRemoteStub.class)
 @AddBean(ServiceApiRemoteStubApplication.class)
-@AddConfig(key = PROP_NAME, value = REAL)
 @AddConfig(key = "server.port", value = "7001") // for Real(ApplicaitonResouce) and RemoteStub Server port
 @AddConfig(key = "security.jersey.enabled", value = "false") // 認証認可OFF
 @AddBean(value = LoginUserInterceptor.class, scope = Dependent.class) // test用のユーザを設定するIntercepor定義

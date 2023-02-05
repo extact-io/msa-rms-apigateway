@@ -7,10 +7,10 @@ services:
     ports:
       - "7001:7001"
     environment:
-      - JWT_FILTER_ENABLE=false
-      - SERVICE_URL_ITEM=http://msa-service-item:7002
-      - SERVICE_URL_RESERVATION=http://msa-service-reservation:7003
-      - SERVICE_URL_USER=http://msa-service-user:7004
+      - SECURITY_JERSEY_ENABLED=true # JWT Auth and RBAC
+      - ENV_RMS_SERVICE_URL_ITEM=http://msa-service-item:7002
+      - ENV_RMS_SERVICE_URL_RESERVATION=http://msa-service-reservation:7003
+      - ENV_RMS_SERVICE_URL_USER=http://msa-service-user:7004
       - TRACING_ENABLED=true
       - TRACING_HOST=jeager
   msa-service-item:
@@ -23,8 +23,8 @@ services:
     image: msa-service-reservation:latest
     container_name: "msa-service-reservation"
     environment:
-      - SERVICE_URL_ITEM=http://msa-service-item:7002
-      - SERVICE_URL_USER=http://msa-service-user:7004
+      - ENV_RMS_SERVICE_URL_ITEM=http://msa-service-item:7002
+      - ENV_RMS_SERVICE_URL_USER=http://msa-service-user:7004
       - TRACING_ENABLED=true
       - TRACING_HOST=jeager
   msa-service-user:

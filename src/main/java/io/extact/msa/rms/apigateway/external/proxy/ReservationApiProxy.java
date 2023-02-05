@@ -1,7 +1,5 @@
 package io.extact.msa.rms.apigateway.external.proxy;
 
-import static io.extact.msa.rms.apigateway.external.ApiType.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,11 +14,9 @@ import io.extact.msa.rms.apigateway.external.ReservationApi;
 import io.extact.msa.rms.apigateway.external.dto.AddReservationDto;
 import io.extact.msa.rms.apigateway.external.dto.ReservationDto;
 import io.extact.msa.rms.apigateway.external.restclient.ReservationApiRestClient;
-import io.extact.msa.rms.platform.core.extension.EnabledIfRuntimeConfig;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException;
 
 @ApplicationScoped
-@EnabledIfRuntimeConfig(propertyName = PROP_NAME, value = REAL)
 public class ReservationApiProxy implements ReservationApi {
 
     private ReservationApiRestClient client;

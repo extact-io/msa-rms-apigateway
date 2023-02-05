@@ -1,6 +1,5 @@
 package io.extact.msa.rms.apigateway.webapi;
 
-import static io.extact.msa.rms.apigateway.external.ApiType.*;
 import static java.nio.file.StandardOpenOption.*;
 
 import java.nio.file.Files;
@@ -34,7 +33,6 @@ import io.helidon.microprofile.tests.junit5.HelidonTest;
 @AddBean(ReservationApiRemoteStub.class)
 @AddBean(UserAccountApiRemoteStub.class)
 @AddBean(ServiceApiRemoteStubApplication.class)
-@AddConfig(key = PROP_NAME, value = REAL)
 @AddConfig(key = "server.port", value = "7001") // for REST server
 @ExtendWith(JulToSLF4DelegateExtension.class)
 class GenerateOasFileTest {

@@ -1,7 +1,5 @@
 package io.extact.msa.rms.apigateway.external.proxy;
 
-import static io.extact.msa.rms.apigateway.external.ApiType.*;
-
 import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -13,11 +11,9 @@ import io.extact.msa.rms.apigateway.external.UserAccountApi;
 import io.extact.msa.rms.apigateway.external.dto.AddUserAccountDto;
 import io.extact.msa.rms.apigateway.external.dto.UserAccountDto;
 import io.extact.msa.rms.apigateway.external.restclient.UserAccountApiRestClient;
-import io.extact.msa.rms.platform.core.extension.EnabledIfRuntimeConfig;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException;
 
 @ApplicationScoped
-@EnabledIfRuntimeConfig(propertyName = PROP_NAME, value = REAL)
 public class UserAccountApiProxy implements UserAccountApi {
 
     private UserAccountApiRestClient client;
