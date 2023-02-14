@@ -2,28 +2,56 @@
 # Defined for each environment
 #----------------------------------
 env.rms:
-  server.port: 7001
+  server:
+    port: 7001
+    tls.port: 7011
   service.url:
     item: http://localhost:7002
     reservation: http://localhost:7003
     user: http://localhost:7004
+  sec:
+    tls.passphrase: mamezou # for forTest.p12
+    tls.file: # override with environment variables
+    jwt:
+      filter: true
+      secretkey: /jwt.key
+      publickey: /jwt.pub.key
 
 #----------------------------------
 # MicroProfile Configurations
 #----------------------------------
 mp:
   jwt:
-    verify.publickey.location: /jwt.pub.key
+    verify.publickey.location: ${env.rms.sec.jwt.publickey}
   openapi:
     model.reader: io.extact.msa.rms.platform.fw.webapi.openapi.JwtAuthDecoratedModelReader
-
 #----------------------------------
 # Helidon Configurations
 #----------------------------------
 server:
   port: ${env.rms.server.port}
+  sockets:
+    - name: secure
+      port: ${env.rms.server.tls.port}
+      tls:
+        trust.keystore:
+          passphrase: ${env.rms.sec.tls.passphrase}
+          trust-store: true
+          # path takes precedence
+          resource:
+            path: # set in init process with ${env.rms.sec.tls.file}
+            resource-path: forTest.p12
+        private-key.keystore:
+          passphrase: ${env.rms.sec.tls.passphrase}
+          # path takes precedence
+          resource:
+            path: # set in init process with ${env.rms.sec.tls.file}
+            resource-path: forTest.p12
   access-log:
     format: "%t %h %r %s %b %D"
+security:
+  jersey:
+    enabled: ${env.rms.sec.jwt.filter}
 health:
   timeout-millis: 30000 # for Helidon MicroProfile Health
 tracing:
@@ -53,7 +81,7 @@ rms:
         - class: io.extact.msa.rms.platform.core.jwt.provider.impl.Auth0RsaJwtGenerator
         - class: io.extact.msa.rms.platform.fw.external.PropagateJwtClientHeadersFactory
   jwt:
-    privatekey.path: /jwt.key
+    privatekey.path: ${env.rms.sec.jwt.secretkey}
     claim.issuer: RentalReservationSystem
   healthCheck:
     otherChecks:
@@ -68,7 +96,8 @@ rms:
     main.jar: msa-rms-apigateway\.jar$
   debug:
     configdump:
-      filter-enable: true
-      filters:
-        #- filter: security
-        - filter: server
+      enable: true
+      filter.pattern:
+        - security
+        - env.rms
+        - server

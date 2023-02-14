@@ -14,8 +14,8 @@
   </appender>
 
   <logger name="EclipseLink" level="DEBUG"/>
-  <!--
   <logger name="ConfigDump" level="DEBUG"/>
+  <!--
    -->
   <logger name="ServerHeaderDump" level="DEBUG"/>
 
