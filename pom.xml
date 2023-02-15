@@ -11,11 +11,22 @@
 	<name>msa-rms-apigateway</name>
 	<description>rms apigateway module</description>
 
+	<repositories>
+		<repository>
+			<id>github</id>
+			<name>GitHub Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/extact-io/msa-rms-parent</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<properties>
 		<mainClass>io.extact.msa.rms.apigateway.ApiGatewayMain</mainClass>
-		<oas.server.host>localhost</oas.server.host>
-		<oas.server.port>7001</oas.server.port>
-		<target.env>develop</target.env>
 		<docker.image.name>msa-apigateway</docker.image.name>
 	</properties>
 
@@ -280,14 +291,4 @@
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>product</id>
-			<properties>
-				<target.env>product</target.env>
-				<oas.server.host>app.extact.io</oas.server.host>
-				<oas.server.port>443</oas.server.port>
-			</properties>
-		</profile>
-	</profiles>
 </project>
