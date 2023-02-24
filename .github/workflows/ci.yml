@@ -1,8 +1,0 @@
-name: CI Workflow
-
-on:
-  workflow_dispatch:
-
-jobs:
-  execute:
-    uses: extact-io/msa-rms-parent/.github/workflows/common-ci.yml@main
