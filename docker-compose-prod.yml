@@ -2,7 +2,7 @@
 version: "3"
 services:
   msa-apigateway:
-    image: msa-apigateway:latest
+    image: extactmame/msa-apigateway:latest
     container_name: "msa-apigateway"
     ports:
       - "80:7001"
@@ -13,15 +13,15 @@ services:
       - ENV_RMS_SERVICE_URL_USER=http://msa-service-user:7004
       - ENV_RMS_SEC_TLS_PASSPHRASE=mamezou  # override with environment variables for secret
       - ENV_RMS_SEC_JWT_FILTER=true         # JWT Auth and RBAC
-      - ENV_RMS_SEC_JWT_SECRETKEY=/resources/jwt.key
-      - ENV_RMS_SEC_JWT_PUBLICKEY=/resources/jwt.pub.key
-      - ENV_RMS_SEC_TLS_FILE=/resources/forTest.p12
+      - ENV_RMS_SEC_JWT_SECRETKEY=/resources/secrets/jwt.key
+      - ENV_RMS_SEC_JWT_PUBLICKEY=/resources/secrets/jwt.pub.key
+      - ENV_RMS_SEC_TLS_FILE=/resources/app_extact_io.p12
       - TRACING_ENABLED=true
       - TRACING_HOST=jeager
     volumes:
-      - ./src/main/resources:/resources
+      - /etc/letsencrypt/live/app.extact.io/app_extact_io.p12:/resources/app_extact_io.p12
   msa-service-item:
-    image: msa-service-item:latest
+    image: extactmame/msa-service-item:latest
     container_name: "msa-service-item"
     environment:
       - ENV_RMS_H2_USER=sa    # override with environment variables for secret
@@ -30,7 +30,7 @@ services:
       - TRACING_ENABLED=true
       - TRACING_HOST=jeager
   msa-service-reservation:
-    image: msa-service-reservation:latest
+    image: extactmame/msa-service-reservation:latest
     container_name: "msa-service-reservation"
     environment:
       - ENV_RMS_SERVICE_URL_ITEM=http://msa-service-item:7002
@@ -41,7 +41,7 @@ services:
       - TRACING_ENABLED=true
       - TRACING_HOST=jeager
   msa-service-user:
-    image: msa-service-user:latest
+    image: extactmame/msa-service-user:latest
     container_name: "msa-service-user"
     environment:
       - ENV_RMS_H2_USER=sa    # override with environment variables for secret

@@ -39,13 +39,13 @@ server:
           trust-store: true
           # path takes precedence
           resource:
-            path: # set in init process with ${env.rms.sec.tls.file}
+            path: # set in ApiGatewayMain with ${env.rms.sec.tls.file}
             resource-path: forTest.p12
         private-key.keystore:
           passphrase: ${env.rms.sec.tls.passphrase}
           # path takes precedence
           resource:
-            path: # set in init process with ${env.rms.sec.tls.file}
+            path: # set in ApiGatewayMain with ${env.rms.sec.tls.file}
             resource-path: forTest.p12
   access-log:
     format: "%t %h %r %s %b %D"
