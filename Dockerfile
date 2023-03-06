@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jre-alpine
+FROM docker.io/eclipse-temurin:17-jre-alpine
 WORKDIR /msa-apigateway
 
 COPY ./target/msa-rms-apigateway.jar ./
