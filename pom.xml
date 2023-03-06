@@ -27,7 +27,7 @@
 
 	<properties>
 		<mainClass>io.extact.msa.rms.apigateway.ApiGatewayMain</mainClass>
-		<docker.image.name>msa-apigateway</docker.image.name>
+		<image.name>msa-apigateway</image.name>
 	</properties>
 
 	<dependencies>
