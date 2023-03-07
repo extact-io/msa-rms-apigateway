@@ -20,7 +20,7 @@ jobs:
 
   deploy:
     if: ${{ !failure() }}
-    needs: verify-all
+    needs: verify
     uses: extact-io/msa-rms-parent/.github/workflows/deploy-job.yml@main
     with:
       repo: ${{ github.repository }}
