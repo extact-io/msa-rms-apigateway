@@ -2,7 +2,7 @@
 version: "3"
 services:
   msa-apigateway:
-    image: extactmame/msa-apigateway:latest
+    image: ghcr.io/extact-io/msa-apigateway:latest
     container_name: "msa-apigateway"
     ports:
       - "80:7001"
@@ -21,7 +21,7 @@ services:
     volumes:
       - /etc/letsencrypt/live/app.extact.io/app_extact_io.p12:/resources/app_extact_io.p12
   msa-service-item:
-    image: extactmame/msa-service-item:latest
+    image: ghcr.io/extact-io/msa-service-item:latest
     container_name: "msa-service-item"
     environment:
       - ENV_RMS_H2_USER=sa    # override with environment variables for secret
@@ -30,7 +30,7 @@ services:
       - TRACING_ENABLED=true
       - TRACING_HOST=jeager
   msa-service-reservation:
-    image: extactmame/msa-service-reservation:latest
+    image: ghcr.io/extact-io/msa-service-reservation:latest
     container_name: "msa-service-reservation"
     environment:
       - ENV_RMS_SERVICE_URL_ITEM=http://msa-service-item:7002
@@ -41,7 +41,7 @@ services:
       - TRACING_ENABLED=true
       - TRACING_HOST=jeager
   msa-service-user:
-    image: extactmame/msa-service-user:latest
+    image: ghcr.io/extact-io/msa-service-user:latest
     container_name: "msa-service-user"
     environment:
       - ENV_RMS_H2_USER=sa    # override with environment variables for secret
