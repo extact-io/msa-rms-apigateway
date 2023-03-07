@@ -1,5 +1,5 @@
 # Workflow - Verify and Deploy to GitHub Packages
-name: verify-to-deploy-all-workflow
+name: verify-to-deploy-workflow
 
 on:
   workflow_dispatch:

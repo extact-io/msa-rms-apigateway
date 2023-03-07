@@ -1,5 +1,5 @@
 # Workflow - mvn verify for All
-name: verify-all-workflow
+name: verify-workflow
 
 on:
   workflow_dispatch:
