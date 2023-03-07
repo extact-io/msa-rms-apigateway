@@ -12,13 +12,13 @@ on:
         default: false
 
 jobs:
-  verify:
+  call-verify:
     if: ${{ !inputs.skip-verify }}
     uses: extact-io/msa-rms-parent/.github/workflows/verify-app-job.yml@main
     with:
       repo: ${{ github.repository }}
 
-  deploy:
+  call-deploy:
     if: ${{ !failure() }}
     needs: verify
     uses: extact-io/msa-rms-parent/.github/workflows/deploy-job.yml@main
