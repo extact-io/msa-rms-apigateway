@@ -1,4 +1,4 @@
-# Workflow - Publish to GitHub Packages
+# Workflow - build, publish jar and image to GitHub Packages for this repository(msa-rms-apigateway)
 name: deploy-workflow
 
 on:
