@@ -58,18 +58,19 @@ tracing:
   service: ApiGatewayApplication
 openapi.ui:
   options:
-    # see: https://github.com/helidon-io/helidon/issues/5998
     # see: key is io.smallrye.openapi.ui.Option emum name
     # see: value is https://ja.quarkus.io/guides/openapi-swaggerui#swagger-ui
     displayOperationId: true
-    #title: RMS OpenAPI UI
-    #themeHref: theme-muted.css
-    #backHref: https://github.com/extact-io
-    #selfHref: https://github.com/extact-io
+    title: RMS OpenAPI UI
+    themeHref: theme-muted.css
+    backHref: https://github.com/extact-io
+    selfHref: https://github.com/extact-io
 
 web-api-item/mp-rest/url: ${env.rms.service.url.item}
 web-api-reservation/mp-rest/url: ${env.rms.service.url.reservation}
 web-api-user/mp-rest/url: ${env.rms.service.url.user}
+
+
 
 #----------------------------------
 # Applications Configurations

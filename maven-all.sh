@@ -1,12 +1,5 @@
 #!/bin/bash
 #-----------------------
-# setpu env
-#-----------------------
-export DEBUG_SLEEP_ENABLE=false
-export DEBUG_SLEEP_TIME=1000
-export JWT_FILTER_ENABLE=true
-
-#-----------------------
 # define command
 #-----------------------
 INSTALL_CMD="mvn -Pcli clean install -DskipTests="
