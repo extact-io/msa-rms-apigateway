@@ -1,0 +1,13 @@
+# $ docker-compose up
+version: "3"
+services:
+  msa-apigateway:
+    image: msa-apigateway:latest
+    container_name: "msa-apigateway"
+    ports:
+      - "7001:7001"
+    environment:
+      - LOGBACK_CONFIG_PATH=/resources/logback-production.xml
+    volumes:
+      - ./env/deployment/logback-production.xml:/resources/logback-production.xml
+      - ./logs:/logs
