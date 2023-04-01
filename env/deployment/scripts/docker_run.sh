@@ -2,8 +2,8 @@
 if [ -f /usr/local/apps/msa-apigateway/secrets/env.product ]; then
     . /usr/local/apps/msa-apigateway/secrets/env.product
 fi
-if [ -f /usr/local/apps/msa-apigateway/deployment/git_sha ]; then
-    IMAGE_TAG=`cat /usr/local/apps/msa-apigateway/deployment/git_sha`
+if [ -f /usr/local/apps/msa-apigateway/deployment/image_tag ]; then
+    IMAGE_TAG=`cat /usr/local/apps/msa-apigateway/deployment/image_tag`
 fi
 
 echo "[msa-apigateway]STARTING..."
