@@ -1,12 +1,14 @@
-#!/bin/bash
+#!/bin/bash -x
 if [ -f /usr/local/apps/msa-apigateway/secrets/env.product ]; then
     . /usr/local/apps/msa-apigateway/secrets/env.product
 fi
-if [ -f /usr/local/apps/msa-apigateway/deployment/env.git_sha ]; then
-    . /usr/local/apps/msa-apigateway/deployment/env.git_sha
+if [ -f /usr/local/apps/msa-apigateway/deployment/git_sha ]; then
+    IMAGE_TAG=`cat /usr/local/apps/msa-apigateway/deployment/git_sha`
 fi
 
-sudo docker run -d \
+echo "[msa-apigateway]STARTING..."
+
+docker run -d \
     -p 80:7001 \
     -p 443:7011 \
     -v /etc/letsencrypt/live/api.rms.extact.io/api_rms_extact_io.p12:/resources/api_rms_extact_io.p12 \
@@ -25,6 +27,6 @@ sudo docker run -d \
     -e LOGBACK_CONFIG_PATH=/resources/logback-production.xml \
     -e TZ=Asia/Tokyo \
     --name msa-apigateway --rm \
-    ghcr.io/extact-io/msa-apigateway:$GIT_SHA
+    ghcr.io/extact-io/msa-apigateway:$IMAGE_TAG
 
 exit $?

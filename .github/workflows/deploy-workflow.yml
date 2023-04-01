@@ -3,7 +3,6 @@ name: deploy-workflow
 
 on:
   workflow_dispatch:
-    branches: [ main ]
 
 jobs:
   call-deploy:
@@ -11,4 +10,6 @@ jobs:
     with:
       repo: ${{ github.repository }}
       with_image: true
+      deploy_type: ec2
+      aws_appname: msa-apigateway
     secrets: inherit
