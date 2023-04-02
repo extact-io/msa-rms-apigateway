@@ -3,6 +3,14 @@ os: linux
 files:
   - source: /
     destination: /usr/local/apps/msa-apigateway/deployment
+permissions:
+  - object: /usr/local/apps/msa-apigateway/deployment/scripts
+    pattern: "*.sh"
+    owner: ec2-user
+    group: ec2-user
+    mode: 755
+    type:
+      - file
 hooks:
   ApplicationStart:
     - location: scripts/docker_run.sh
