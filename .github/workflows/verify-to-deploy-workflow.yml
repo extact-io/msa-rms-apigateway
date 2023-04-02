@@ -20,11 +20,8 @@ jobs:
   call-deploy:
     if: ${{ !failure() }}
     needs: call-verify
-    uses: extact-io/msa-rms-parent/.github/workflows/deploy-job.yml@main
+    #uses: extact-io/msa-rms-parent/.github/workflows/deploy-job.yml@main
+    uses: ./.github/workflows/deploy-workflow.yml
     with:
-      repo: ${{ github.repository }}
-      skip-test: ${{ inputs.skip-verify }}
-      with-image: true
-      deploy-type: ec2
-      aws-appname: msa-apigateway
+      skip-test: true
     secrets: inherit
