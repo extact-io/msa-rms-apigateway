@@ -3,13 +3,19 @@ name: deploy-workflow
 
 on:
   workflow_dispatch:
+    inputs:
+      skip-test:
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   call-deploy:
     uses: extact-io/msa-rms-parent/.github/workflows/deploy-job.yml@main
     with:
       repo: ${{ github.repository }}
-      with_image: true
-      deploy_type: ec2
-      aws_appname: msa-apigateway
+      skip-test: $${{ inputs.skip-test }}
+      with-image: true
+      deploy-type: ec2
+      aws-appname: msa-apigateway
     secrets: inherit
