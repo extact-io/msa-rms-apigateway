@@ -11,7 +11,7 @@ mkdir ./target/deployment
 cp ./env/deployment/appspec.yml ./target/deployment
 cp ./env/deployment/logback-production.xml ./target/deployment
 cp -r ./env/deployment/scripts ./target/deployment
-echo $GIT_SHA > ./target/deployment/git_sha
+echo $GIT_SHA > ./target/deployment/image_tag
 
 ZIP_NAME="deployment/msa-apigateway-"`date "+%Y%m%d_%H%M%S"`.zip
 
