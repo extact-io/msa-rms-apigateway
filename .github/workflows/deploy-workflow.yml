@@ -8,6 +8,11 @@ on:
         required: true
         type: boolean
         default: false
+  workflow_call:
+    inputs:
+      skip-test:
+        required: true
+        type: boolean
 
 jobs:
   call-deploy:
