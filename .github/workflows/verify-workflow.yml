@@ -3,6 +3,7 @@ name: verify-workflow
 
 on:
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   call-verify:
