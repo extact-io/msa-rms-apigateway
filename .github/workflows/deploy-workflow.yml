@@ -19,7 +19,7 @@ jobs:
     uses: extact-io/msa-rms-parent/.github/workflows/deploy-job.yml@main
     with:
       repo: ${{ github.repository }}
-      skip-test: $${{ inputs.skip-test }}
+      skip-test: ${{ inputs.skip-test }}
       with-image: true
       deploy-type: ec2
       aws-appname: msa-apigateway
