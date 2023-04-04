@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       skip-test:
+        description: skip step?
         required: true
         type: boolean
         default: false
@@ -15,12 +16,17 @@ on:
         type: boolean
 
 jobs:
-  call-deploy:
-    uses: extact-io/msa-rms-parent/.github/workflows/deploy-job.yml@main
+  call-build:
+    uses: extact-io/msa-rms-parent/.github/workflows/build-to-repo-job.yml@main
     with:
       repo: ${{ github.repository }}
+      aws-appname: msa-apigateway
       skip-test: ${{ inputs.skip-test }}
       with-image: true
-      deploy-type: ec2
+    secrets: inherit
+  call-deploy:
+    uses: extact-io/msa-rms-parent/.github/workflows/deploy-to-ec2-job.yml@main
+    with:
+      repo: ${{ github.repository }}
       aws-appname: msa-apigateway
     secrets: inherit
