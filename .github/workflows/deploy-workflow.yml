@@ -25,7 +25,7 @@ jobs:
       with-image: true
     secrets: inherit
   deploy:
-    needs: call-build
+    needs: build
     uses: extact-io/msa-rms-parent/.github/workflows/deploy-to-ec2-job.yml@main
     with:
       repo: ${{ github.repository }}
