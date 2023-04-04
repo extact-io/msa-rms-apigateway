@@ -16,7 +16,7 @@ on:
         type: boolean
 
 jobs:
-  call-build:
+  build:
     uses: extact-io/msa-rms-parent/.github/workflows/build-to-repo-job.yml@main
     with:
       repo: ${{ github.repository }}
@@ -24,7 +24,7 @@ jobs:
       skip-test: ${{ inputs.skip-test }}
       with-image: true
     secrets: inherit
-  call-deploy:
+  deploy:
     needs: call-build
     uses: extact-io/msa-rms-parent/.github/workflows/deploy-to-ec2-job.yml@main
     with:
