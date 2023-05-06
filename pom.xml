@@ -28,6 +28,7 @@
 	<properties>
 		<mainClass>io.extact.msa.rms.apigateway.ApiGatewayMain</mainClass>
 		<image.name>msa-apigateway</image.name>
+		<gen.js.client.version>2.0.0</gen.js.client.version>
 	</properties>
 
 	<dependencies>
@@ -99,8 +100,8 @@
 			<artifactId>jakarta.json.bind-api</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>jakarta.security.enterprise</groupId>
-		    <artifactId>jakarta.security.enterprise-api</artifactId>
+			<groupId>jakarta.security.enterprise</groupId>
+			<artifactId>jakarta.security.enterprise-api</artifactId>
 		</dependency>
 
 		<!-- dependent MicroProfile APIs -->
@@ -117,8 +118,8 @@
 			<artifactId>microprofile-openapi-api</artifactId>
 		</dependency>
 		<dependency>
-        	<groupId>org.eclipse.microprofile.rest.client</groupId>
-    		<artifactId>microprofile-rest-client-api</artifactId>
+			<groupId>org.eclipse.microprofile.rest.client</groupId>
+			<artifactId>microprofile-rest-client-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.microprofile.opentracing</groupId>
@@ -290,5 +291,51 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<profiles>
+		<profile>
+			<id>gen-openapi</id>
+			<properties>
+				<mvn.gen-openapi.profile>on</mvn.gen-openapi.profile>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<includes>
+								<include>io.extact.msa.rms.apigateway.webapi.GenerateOasFileTest.java</include>
+							</includes>
+							<systemPropertyVariables>
+								<mvn.gen-openapi.profile>on</mvn.gen-openapi.profile>
+							</systemPropertyVariables>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>gen-js-client</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.openapitools</groupId>
+						<artifactId>openapi-generator-maven-plugin</artifactId>
+						<version>${version.plugin.openapi-gen}</version>
+						<configuration>
+							<inputSpec>${openapi.file.path}</inputSpec>
+							<generatorName>javascript</generatorName>
+							<configOptions>
+								<projectName>@extact-io/rms-generated-client-js</projectName>
+								<projectVersion>${gen.js.client.version}</projectVersion>
+								<apiPackage>api</apiPackage>
+								<usePromises>true</usePromises>
+								<modelPackage>dto</modelPackage>
+							</configOptions>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

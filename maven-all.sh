@@ -5,6 +5,7 @@
 INSTALL_CMD="mvn -Pcli clean install -DskipTests="
 PACKAGE_CMD="mvn -Pcli,copy-libs clean package -DskipTests="
 IMAGE_CMD="mvn -Pcli,copy-libs clean package docker:build -DskipTests="
+GEN_OPENAPI_CMD="mvn -Pcli,gen-openapi clean test"
 
 EXEC_CASE="package"
 if [ $# != 0 ]; then
@@ -90,6 +91,10 @@ install-image() {
   image $1
 }
 
+gen-openapi() {
+  execute_cmd "${GEN_OPENAPI_CMD}"
+}
+
 #-----------------------
 # execute cases
 #-----------------------
@@ -114,6 +119,9 @@ case "${EXEC_CASE}" in
     ;;
   "image-all")
     install-image $SKIP_TEST
+    ;;
+  "gen-openapi")
+    gen-openapi
     ;;
   *)
     package $SKIP_TEST

@@ -30,7 +30,7 @@
 
   <logger name="io.helidon.webserver.AccessLog" level="DEBUG" />
 
-  <root level="INFO">
+  <root level="DEBUG">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>

@@ -35,6 +35,7 @@ import io.helidon.microprofile.tests.junit5.HelidonTest;
 @AddBean(ServiceApiRemoteStubApplication.class)
 @AddConfig(key = "server.port", value = "7001") // for REST server
 @ExtendWith(JulToSLF4DelegateExtension.class)
+//@EnabledIfSystemProperty(named = "mvn.gen-openapi.profile", matches = "on")
 class GenerateOasFileTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(GenerateOasFileTest.class);
@@ -48,7 +49,10 @@ class GenerateOasFileTest {
     @Test
     void generateOasFile() throws Exception {
         WebTarget target = client.target("http://localhost:7001").path("/openapi");
-        String body = target.request().get(String.class);
+        String body = target
+                .request()
+                .header("Accept", "text/yaml") // Acceptを設定しないとOpenAPI UIのHTMLが返される
+                .get(String.class);
         Path filePath = Files.createDirectories(Paths.get("./target/generated-oas")).resolve("openapi.yml");
         Files.writeString(filePath, body, CREATE, WRITE, TRUNCATE_EXISTING); // 上書きモード
         LOG.info("OASファイルを生成しました [Path:{}]", filePath.toAbsolutePath());
