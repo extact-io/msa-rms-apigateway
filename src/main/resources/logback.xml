@@ -15,9 +15,8 @@
 
   <logger name="EclipseLink" level="DEBUG"/>
   <logger name="ConfigDump" level="DEBUG"/>
-  <!--
-   -->
   <logger name="ServerHeaderDump" level="DEBUG"/>
+  <logger name="io.helidon.webserver.AccessLog" level="DEBUG" />
 
   <!--
   <logger name="io.helidon.webserver.cors.CorsSupportHelper" level="DEBUG"/>
@@ -26,11 +25,14 @@
   <logger name="org.jboss.weld.Bootstrap" level="DEBUG"/>
   <logger name="org.jboss.weld.Reflection" level="DEBUG"/>
   <logger name="org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider" level="DEBUG"/>
+  <logger name="io.netty.handler.logging.LoggingHandler" level="DEBUG" />
    -->
 
-  <logger name="io.helidon.webserver.AccessLog" level="DEBUG" />
+  <logger name="io.helidon.webserver.cors.CorsSupportHelper" level="DEBUG" />
+  <logger name="org.glassfish.jersey.server.ApplicationHandler" level="DEBUG" />
+  
 
-  <root level="DEBUG">
+  <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>
