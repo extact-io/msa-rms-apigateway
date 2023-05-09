@@ -2,7 +2,7 @@
 version: "3"
 services:
   msa-apigateway:
-    image: ghcr.io/extact-io/msa-apigateway:latest
+    image: extact-io/msa-apigateway:latest
     container_name: "msa-apigateway"
     ports:
       - "7001:7001"
@@ -14,13 +14,13 @@ services:
       - TRACING_ENABLED=true
       - TRACING_HOST=jeager
   msa-service-item:
-    image: ghcr.io/extact-io/msa-service-item:latest
+    image: extact-io/msa-service-item:latest
     container_name: "msa-service-item"
     environment:
       - TRACING_ENABLED=true
       - TRACING_HOST=jeager
   msa-service-reservation:
-    image: ghcr.io/extact-io/msa-service-reservation:latest
+    image: extact-io/msa-service-reservation:latest
     container_name: "msa-service-reservation"
     environment:
       - ENV_RMS_SERVICE_URL_ITEM=http://msa-service-item:7002
@@ -28,7 +28,7 @@ services:
       - TRACING_ENABLED=true
       - TRACING_HOST=jeager
   msa-service-user:
-    image: ghcr.io/extact-io/msa-service-user:latest
+    image: extact-io/msa-service-user:latest
     container_name: "msa-service-user"
     environment:
       - TRACING_ENABLED=true
