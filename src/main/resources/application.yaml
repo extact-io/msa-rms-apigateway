@@ -66,6 +66,13 @@ openapi:
     themeHref: theme-muted.css
     backHref: https://github.com/extact-io
     selfHref: https://github.com/extact-io
+cors:
+  enabled: true
+  paths:
+    - path-pattern: /{+}
+      allow-headers: "*, Authorization"
+      allow-origins: http://localhost:3000
+      allow-credentials: true
 
 web-api-item/mp-rest/url: ${env.rms.service.url.item}
 web-api-reservation/mp-rest/url: ${env.rms.service.url.reservation}

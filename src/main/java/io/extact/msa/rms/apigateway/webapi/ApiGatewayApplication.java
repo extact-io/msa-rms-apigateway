@@ -4,15 +4,14 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.ws.rs.ApplicationPath;
-import jakarta.ws.rs.core.Application;
-
 import org.eclipse.microprofile.auth.LoginConfig;
 
 import io.extact.msa.rms.platform.fw.login.LoginUserFromJwtRequestFilter;
 import io.extact.msa.rms.platform.fw.webapi.ManagementResource;
 import io.extact.msa.rms.platform.fw.webapi.RmsBaseApplications;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
 
 @LoginConfig(authMethod = "MP-JWT")
 @ApplicationPath("api")

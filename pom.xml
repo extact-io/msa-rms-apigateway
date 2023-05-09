@@ -164,7 +164,13 @@
 		<dependency>
 			<groupId>io.helidon.microprofile</groupId>
 			<artifactId>helidon-microprofile-cors</artifactId>
+			<!--
+			#TODO: workaround for https://github.com/helidon-io/helidon/issues/6787 
+			-->
+			<!-- 
 			<scope>runtime</scope>
+			-->
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.helidon.microprofile</groupId>
