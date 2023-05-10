@@ -16,6 +16,8 @@ env.rms:
       filter: true
       secretkey: /jwt.key
       publickey: /jwt.pub.key
+  cors:
+    allow.origins: http://localhost:3000 
 
 #----------------------------------
 # MicroProfile Configurations
@@ -71,7 +73,7 @@ cors:
   paths:
     - path-pattern: /{+}
       allow-headers: "*, Authorization"
-      allow-origins: http://localhost:3000
+      allow-origins: ${env.rms.cors.allow.origins}
       allow-credentials: true
 
 web-api-item/mp-rest/url: ${env.rms.service.url.item}

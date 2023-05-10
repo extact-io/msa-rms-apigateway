@@ -38,7 +38,7 @@
     </encoder>
   </appender>
 
-
+  <logger name="io.helidon.webserver.cors.CorsSupportHelper" level="DEBUG" />
   <logger name="io.helidon.webserver.AccessLog" level="INFO" additivity="false">
     <appender-ref ref="ACCESS-LOG" />
   </logger>

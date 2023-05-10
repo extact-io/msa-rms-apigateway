@@ -24,6 +24,7 @@ docker run -d \
     -e ENV_RMS_SERVICE_URL_ITEM=http://item-service.local:7002 \
     -e ENV_RMS_SERVICE_URL_RESERVATION=http://reservation-service.local:7003 \
     -e ENV_RMS_SERVICE_URL_USER=http://user-service.local:7004 \
+    -e ENV_RMS_CORS_ALLOW_ORIGINS: api.rms.extact.io \
     -e LOGBACK_CONFIG_PATH=/resources/logback-production.xml \
     -e TZ=Asia/Tokyo \
     --name msa-apigateway --rm \
