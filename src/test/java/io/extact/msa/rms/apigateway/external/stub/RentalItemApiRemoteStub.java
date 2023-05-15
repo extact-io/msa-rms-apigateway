@@ -1,8 +1,6 @@
 package io.extact.msa.rms.apigateway.external.stub;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionStage;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -32,10 +30,12 @@ public class RentalItemApiRemoteStub implements RentalItemApiRestClient {
                 .map(this::convertRentalItemDto)
                 .toList();
     }
-
+    
     @Override
-    public CompletionStage<RentalItemDto> getAsync(Integer itemId) {
-        return CompletableFuture.supplyAsync(() -> this.get(itemId));
+    public RentalItemDto get(Integer itemId) {
+        return stub.get(itemId)
+                .map(this::convertRentalItemDto)
+                .orElse(null);
     }
 
     @Override
@@ -56,12 +56,6 @@ public class RentalItemApiRemoteStub implements RentalItemApiRestClient {
 
 
     // ----------------------------------------------------- convert methods
-
-    private RentalItemDto get(Integer itemId) {
-        return stub.get(itemId)
-                .map(this::convertRentalItemDto)
-                .orElse(null);
-    }
 
     private RentalItemDto convertRentalItemDto(RentalItemStubDto src) {
         return RentalItemDto.of(src.getId(), src.getSerialNo(), src.getItemName());

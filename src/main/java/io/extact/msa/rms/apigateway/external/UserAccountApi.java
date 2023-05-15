@@ -11,10 +11,10 @@ public interface UserAccountApi {
 
     List<UserAccountDto> getAll();
 
-    UserAccountDto getNullable(int userAccountId);
+    UserAccountDto get(int userAccountId);
 
-    default Optional<UserAccountDto> get(int userAccountId) {
-        return Optional.ofNullable(this.getNullable(userAccountId));
+    default Optional<UserAccountDto> getOptional(int userAccountId) {
+        return Optional.ofNullable(this.get(userAccountId));
     }
 
     UserAccountDto add(AddUserAccountDto dto) throws BusinessFlowException;

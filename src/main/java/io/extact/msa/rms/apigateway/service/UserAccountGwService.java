@@ -33,7 +33,7 @@ public class UserAccountGwService {
     }
 
     public Optional<UserAccountModel> get(int id) {
-        return api.get(id).map(UserAccountDto::toModel);
+        return api.getOptional(id).map(UserAccountDto::toModel);
     }
 
     public UserAccountModel add(UserAccountModel addModel) throws BusinessFlowException {

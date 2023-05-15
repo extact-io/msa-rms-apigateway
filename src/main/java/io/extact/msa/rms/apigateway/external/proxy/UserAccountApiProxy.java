@@ -29,7 +29,7 @@ public class UserAccountApiProxy implements UserAccountApi {
     }
 
     @Override
-    public UserAccountDto getNullable(int userAccountId) {
+    public UserAccountDto get(int userAccountId) {
         return client.get(userAccountId);
     }
 

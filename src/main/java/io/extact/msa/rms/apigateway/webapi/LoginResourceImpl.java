@@ -9,10 +9,12 @@ import io.extact.msa.rms.apigateway.webapi.dto.LoginEventDto;
 import io.extact.msa.rms.apigateway.webapi.dto.UserAccountResourceDto;
 import io.extact.msa.rms.platform.core.jwt.provider.GenerateToken;
 import io.extact.msa.rms.platform.core.validate.ValidateParam;
+import io.extact.msa.rms.platform.fw.exception.interceptor.ExceptionUnwrapAware;
 
 @Path("login")
-@ValidateParam
 @ApplicationScoped
+@ValidateParam
+@ExceptionUnwrapAware
 public class LoginResourceImpl implements LoginResource {
 
     private UserAccountGwService userService;

@@ -31,8 +31,8 @@ import io.opentracing.Tracer;
 @ApplicationScoped
 public class ReservationGwService {
 
-@Inject
-private Tracer tracer;
+    @Inject
+    private Tracer tracer;
 
     private ReservationApi reservationApi;
     private RentalItemApi itemApi;
@@ -122,9 +122,10 @@ private Tracer tracer;
     // ----------------------------------------------------------------- private methods
 
     private ReservationModel composeModel(ReservationDto reservationDto) {
-        CompletableFuture<RentalItemDto> itemFuture = itemApi.getAsync(reservationDto.getRentalItemId());
+        CompletableFuture<RentalItemDto> itemFuture = new SpanContextAware(tracer)
+                .supplyAsync(() -> itemApi.get(reservationDto.getRentalItemId()));
         CompletableFuture<UserAccountDto> userFuture = new SpanContextAware(tracer)
-                .supplyAsync(() -> userApi.getNullable(reservationDto.getUserAccountId()));
+                .supplyAsync(() -> userApi.get(reservationDto.getUserAccountId()));
         CompletableFuture.allOf(itemFuture, userFuture).join();
 
         var itemModel = Optional.ofNullable(itemFuture.join())

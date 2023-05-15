@@ -1,7 +1,6 @@
 package io.extact.msa.rms.apigateway.external.proxy;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -29,8 +28,8 @@ public class RentalItemApiProxy implements RentalItemApi {
     }
 
     @Override
-    public CompletableFuture<RentalItemDto> getAsync(int itemId) {
-        return client.getAsync(itemId).toCompletableFuture();
+    public RentalItemDto get(int itemId) {
+        return client.get(itemId);
     }
 
     @Override

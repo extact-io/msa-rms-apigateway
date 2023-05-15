@@ -25,12 +25,14 @@ import io.extact.msa.rms.platform.core.validate.ValidateParam;
 import io.extact.msa.rms.platform.fw.domain.constraint.ValidationGroups.Add;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException.CauseType;
+import io.extact.msa.rms.platform.fw.exception.interceptor.ExceptionUnwrapAware;
 import io.extact.msa.rms.platform.fw.login.LoginUserUtils;
 
 @Path("rms")
 @SecurityRequirement(name = "RmsJwtAuth")
-@ValidateParam
 @ApplicationScoped
+@ValidateParam
+@ExceptionUnwrapAware
 public class ApiGatewayResourceImpl implements ApiGatewayResource {
 
     private ReservationGwService reservationService;

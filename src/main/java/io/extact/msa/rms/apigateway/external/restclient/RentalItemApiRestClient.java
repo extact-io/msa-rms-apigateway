@@ -1,7 +1,6 @@
 package io.extact.msa.rms.apigateway.external.restclient;
 
 import java.util.List;
-import java.util.concurrent.CompletionStage;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -20,6 +19,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import io.extact.msa.rms.apigateway.external.dto.AddRentalItemDto;
 import io.extact.msa.rms.apigateway.external.dto.RentalItemDto;
 import io.extact.msa.rms.platform.core.jaxrs.converter.RmsTypeParameterFeature;
+import io.extact.msa.rms.platform.fw.exception.interceptor.NetworkConnectionErrorAware;
 import io.extact.msa.rms.platform.fw.external.PropagateLoginUserClientHeadersFactory;
 import io.extact.msa.rms.platform.fw.external.PropagateResponseExceptionMapper;
 
@@ -28,6 +28,7 @@ import io.extact.msa.rms.platform.fw.external.PropagateResponseExceptionMapper;
 @RegisterProvider(PropagateResponseExceptionMapper.class)
 @RegisterClientHeaders(PropagateLoginUserClientHeadersFactory.class)
 @Path("api/items")
+@NetworkConnectionErrorAware
 public interface RentalItemApiRestClient {
 
     @GET
@@ -37,7 +38,7 @@ public interface RentalItemApiRestClient {
     @GET
     @Path("/{itemId}")
     @Produces(MediaType.APPLICATION_JSON)
-    CompletionStage<RentalItemDto> getAsync(@PathParam("itemId") Integer itemId);
+    RentalItemDto get(@PathParam("itemId") Integer itemId);
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
