@@ -19,7 +19,6 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import io.extact.msa.rms.apigateway.external.dto.AddRentalItemDto;
 import io.extact.msa.rms.apigateway.external.dto.RentalItemDto;
 import io.extact.msa.rms.platform.core.jaxrs.converter.RmsTypeParameterFeature;
-import io.extact.msa.rms.platform.fw.exception.interceptor.NetworkConnectionErrorAware;
 import io.extact.msa.rms.platform.fw.external.PropagateLoginUserClientHeadersFactory;
 import io.extact.msa.rms.platform.fw.external.PropagateResponseExceptionMapper;
 
@@ -28,7 +27,6 @@ import io.extact.msa.rms.platform.fw.external.PropagateResponseExceptionMapper;
 @RegisterProvider(PropagateResponseExceptionMapper.class)
 @RegisterClientHeaders(PropagateLoginUserClientHeadersFactory.class)
 @Path("api/items")
-@NetworkConnectionErrorAware
 public interface RentalItemApiRestClient {
 
     @GET

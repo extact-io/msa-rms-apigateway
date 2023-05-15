@@ -11,8 +11,10 @@ import io.extact.msa.rms.apigateway.external.RentalItemApi;
 import io.extact.msa.rms.apigateway.external.dto.AddRentalItemDto;
 import io.extact.msa.rms.apigateway.external.dto.RentalItemDto;
 import io.extact.msa.rms.apigateway.external.restclient.RentalItemApiRestClient;
+import io.extact.msa.rms.platform.fw.exception.interceptor.NetworkConnectionErrorAware;
 
 @ApplicationScoped
+@NetworkConnectionErrorAware
 public class RentalItemApiProxy implements RentalItemApi {
 
     private RentalItemApiRestClient client;

@@ -12,8 +12,10 @@ import io.extact.msa.rms.apigateway.external.dto.AddUserAccountDto;
 import io.extact.msa.rms.apigateway.external.dto.UserAccountDto;
 import io.extact.msa.rms.apigateway.external.restclient.UserAccountApiRestClient;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException;
+import io.extact.msa.rms.platform.fw.exception.interceptor.NetworkConnectionErrorAware;
 
 @ApplicationScoped
+@NetworkConnectionErrorAware
 public class UserAccountApiProxy implements UserAccountApi {
 
     private UserAccountApiRestClient client;

@@ -23,7 +23,6 @@ import io.extact.msa.rms.apigateway.external.dto.AddReservationDto;
 import io.extact.msa.rms.apigateway.external.dto.ReservationDto;
 import io.extact.msa.rms.platform.core.jaxrs.converter.RmsTypeParameterFeature;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException;
-import io.extact.msa.rms.platform.fw.exception.interceptor.NetworkConnectionErrorAware;
 import io.extact.msa.rms.platform.fw.external.PropagateLoginUserClientHeadersFactory;
 import io.extact.msa.rms.platform.fw.external.PropagateResponseExceptionMapper;
 
@@ -32,7 +31,6 @@ import io.extact.msa.rms.platform.fw.external.PropagateResponseExceptionMapper;
 @RegisterProvider(PropagateResponseExceptionMapper.class)
 @RegisterClientHeaders(PropagateLoginUserClientHeadersFactory.class)
 @Path("api/reservations")
-@NetworkConnectionErrorAware
 public interface ReservationApiRestClient {
 
     @GET

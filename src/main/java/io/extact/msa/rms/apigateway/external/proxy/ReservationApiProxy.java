@@ -15,8 +15,10 @@ import io.extact.msa.rms.apigateway.external.dto.AddReservationDto;
 import io.extact.msa.rms.apigateway.external.dto.ReservationDto;
 import io.extact.msa.rms.apigateway.external.restclient.ReservationApiRestClient;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException;
+import io.extact.msa.rms.platform.fw.exception.interceptor.NetworkConnectionErrorAware;
 
 @ApplicationScoped
+@NetworkConnectionErrorAware
 public class ReservationApiProxy implements ReservationApi {
 
     private ReservationApiRestClient client;
