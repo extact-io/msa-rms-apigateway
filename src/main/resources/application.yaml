@@ -57,7 +57,7 @@ security:
 health:
   timeout-millis: 30000 # for Helidon MicroProfile Health
 tracing:
-  service: ApiGatewayApplication
+  service: ApiGateway
 openapi:
   #web-context: openapi-ui
   ui.options:

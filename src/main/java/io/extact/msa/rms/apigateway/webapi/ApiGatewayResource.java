@@ -58,6 +58,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = ReservationResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     List<ReservationResourceDto> findReservationByRentalItemAndStartDate(@RmsId @PathParam("itemId") Integer itemId,
             @NotNull @PathParam("startDate") LocalDate startDate);
 
@@ -72,6 +73,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = ReservationResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     List<ReservationResourceDto> findReservationByReserverId(@RmsId @PathParam("reserverId") Integer reserverId);
 
     @GET
@@ -83,6 +85,8 @@ public interface ApiGatewayResource {
     @Operation(operationId = "getOwnReservations", summary = "自分の予約一覧を取得する", description = "ログインユーザが予約者となっている予約の一覧を取得する。このAPIは/reservations/reserver/{reserverId}のエイリアスとなっている")
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = ReservationResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
+    @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     List<ReservationResourceDto> getOwnReservations();
 
     @GET
@@ -94,6 +98,8 @@ public interface ApiGatewayResource {
     @Tag(name = "Admin")
     @Operation(operationId = "getAllRentalItems", summary = "レンタル品の全件を取得する", description = "登録されているすべてのレンタル品を取得する")
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = RentalItemResourceDto.class)))
+    @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     List<RentalItemResourceDto> getAllRentalItems();
 
     @POST
@@ -110,6 +116,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "404", ref = "#/components/responses/UnknownData")
     @APIResponse(responseCode = "409", ref = "#/components/responses/DataDupricate")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     ReservationResourceDto addReservation(@Valid AddReservationEventDto dto);
 
     @DELETE
@@ -125,6 +132,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "403", ref = "#/components/responses/Forbidden")
     @APIResponse(responseCode = "404", ref = "#/components/responses/UnknownData")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     void cancelReservation(@RmsId @PathParam("reservationId") Integer reservationId);
 
     @GET
@@ -138,6 +146,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = ReservationResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     List<ReservationResourceDto> findReservationByRentalItemId(@RmsId @PathParam("itemId") Integer itemId);
 
     @GET
@@ -152,6 +161,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = RentalItemResourceDto.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     List<RentalItemResourceDto> findCanRentedItemAtTerm(@NotNull @QueryParam("from") LocalDateTime from, @NotNull @QueryParam("to") LocalDateTime to);
 
     @GET
@@ -167,6 +177,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "200", description = "trueならレンタル可", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.BOOLEAN, implementation = Boolean.class)))
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     boolean canRentedItemAtTerm(@RmsId @PathParam("itemId") Integer rentalItemId, @NotNull @QueryParam("from") LocalDateTime from,
             @NotNull @QueryParam("to") LocalDateTime to);
 
@@ -183,6 +194,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "409", ref = "#/components/responses/DataDupricate")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     RentalItemResourceDto addRentalItem(@Valid AddRentalItemEventDto dto);
 
     @PUT
@@ -198,6 +210,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "404", ref = "#/components/responses/UnknownData")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     RentalItemResourceDto updateRentalItem(@Valid RentalItemResourceDto updateDto);
 
     @DELETE
@@ -212,6 +225,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "404", ref = "#/components/responses/UnknownData")
     @APIResponse(responseCode = "409", ref = "#/components/responses/DataRefered")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     void deleteRentalItem(@RmsId @PathParam("itemId") Integer itemId);
 
     @GET
@@ -222,6 +236,8 @@ public interface ApiGatewayResource {
     @Tag(name = "Admin")
     @Operation(operationId = "getAllReservations", summary = "予約の全件を取得する", description = "登録されているすべての予約を取得する")
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = ReservationResourceDto.class)))
+    @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     List<ReservationResourceDto> getAllReservations();
 
     @PUT
@@ -237,6 +253,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "404", ref = "#/components/responses/UnknownData")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     ReservationResourceDto updateReservation(@Valid ReservationResourceDto updateDto);
 
     @DELETE
@@ -250,6 +267,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "404", ref = "#/components/responses/UnknownData")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     void deleteReservation(@RmsId @PathParam("reservationId") Integer reservationId);
 
     @GET
@@ -260,6 +278,8 @@ public interface ApiGatewayResource {
     @Tag(name = "Admin")
     @Operation(operationId = "getAllUserAccounts", summary = "ユーザの全件を取得する", description = "登録されているすべてのユーザを取得する")
     @APIResponse(responseCode = "200", description = "検索結果", content = @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.ARRAY, implementation = UserAccountResourceDto.class)))
+    @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     List<UserAccountResourceDto> getAllUserAccounts();
 
     @POST
@@ -275,6 +295,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "409", ref = "#/components/responses/DataDupricate")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     UserAccountResourceDto addUserAccount(@Valid AddUserAccountEventDto dto);
 
     @PUT
@@ -290,6 +311,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "404", ref = "#/components/responses/UnknownData")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     UserAccountResourceDto updateUserAccount(@Valid UserAccountResourceDto dto);
 
     @DELETE
@@ -304,6 +326,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "404", ref = "#/components/responses/UnknownData")
     @APIResponse(responseCode = "409", ref = "#/components/responses/DataRefered")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     void deleteUserAccount(@RmsId @PathParam("userAccountId") Integer userAccountId);
 
     @GET
@@ -317,6 +340,7 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "200", description = "プロファイル情報", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserAccountResourceDto.class)))
     @APIResponse(responseCode = "404", ref = "#/components/responses/NotFound")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     UserAccountResourceDto getOwnUserProfile();
 
     @PUT
@@ -333,5 +357,6 @@ public interface ApiGatewayResource {
     @APIResponse(responseCode = "403", ref = "#/components/responses/Forbidden")
     @APIResponse(responseCode = "404", ref = "#/components/responses/UnknownData")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     UserAccountResourceDto updateUserProfile(@Valid UserAccountResourceDto dto);
 }

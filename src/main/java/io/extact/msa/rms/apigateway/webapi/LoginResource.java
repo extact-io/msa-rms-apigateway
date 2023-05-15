@@ -33,7 +33,8 @@ public interface LoginResource {
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "404", ref = "#/components/responses/NotFound")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
-    UserAccountResourceDto authenticate(@LoginId @QueryParam("loginId") String loginId,
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
+       UserAccountResourceDto authenticate(@LoginId @QueryParam("loginId") String loginId,
             @Passowrd @QueryParam("password") String password);
 
     @POST
@@ -47,5 +48,6 @@ public interface LoginResource {
     @APIResponse(responseCode = "400", ref = "#/components/responses/ParameterError")
     @APIResponse(responseCode = "404", ref = "#/components/responses/NotFound")
     @APIResponse(responseCode = "500", ref = "#/components/responses/ServerError")
+    @APIResponse(responseCode = "503", ref = "#/components/responses/ServiceUnavailable")
     UserAccountResourceDto authenticate(@Valid LoginEventDto loginDto);
 }
