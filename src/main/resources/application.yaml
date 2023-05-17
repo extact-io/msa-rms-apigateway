@@ -27,6 +27,7 @@ mp:
     verify.publickey.location: ${env.rms.sec.jwt.publickey}
   openapi:
     model.reader: io.extact.msa.rms.platform.fw.webapi.openapi.JwtAuthDecoratedModelReader
+
 #----------------------------------
 # Helidon Configurations
 #----------------------------------
@@ -79,8 +80,6 @@ cors:
 web-api-item/mp-rest/url: ${env.rms.service.url.item}
 web-api-reservation/mp-rest/url: ${env.rms.service.url.reservation}
 web-api-user/mp-rest/url: ${env.rms.service.url.user}
-
-
 
 #----------------------------------
 # Applications Configurations
