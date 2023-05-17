@@ -8,6 +8,14 @@ fi
 
 echo "[msa-apigateway]STARTING..."
 
+END_STATUS=0
+
+# Create docker network
+docker network create -d bridge msa-apigateway-network  || {
+    	echo "msa-apigateway-network create fail error:$?" && END_STATUS=1
+    }
+
+# Start msa-apigateway
 docker run -d \
     -p 80:7001 \
     -p 443:7011 \
@@ -27,7 +35,28 @@ docker run -d \
     -e ENV_RMS_CORS_ALLOW_ORIGINS=https://app.rms.extact.io \
     -e LOGBACK_CONFIG_PATH=/resources/logback-production.xml \
     -e TZ=Asia/Tokyo \
+    -e TRACING_ENABLED=true \
+    -e TRACING_HOST=jaeger \
     --name msa-apigateway --rm \
-    ghcr.io/extact-io/msa-apigateway:$IMAGE_TAG
+    --network msa-apigateway-network \
+    ghcr.io/extact-io/msa-apigateway:$IMAGE_TAG || {
+    	echo "msa-apigateway start fail error:$?" && END_STATUS=1
+    }
 
-exit $?
+# Start jaeger
+docker run -d --name jaeger \
+    -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 \
+    -e COLLECTOR_OTLP_ENABLED=true \
+    -p 6831:6831/udp \
+    -p 5778:5778 \
+    -p 16686:16686 \
+    -p 14250:14250 \
+    -p 14268:14268 \
+    -p 9411:9411 \
+    --name jaeger --rm \
+    --network msa-apigateway-network \
+  	jaegertracing/all-in-one1:1.39 || {
+    	echo "jaeger start fail error:$?" && END_STATUS=1  
+    }
+
+exit $END_STATUS

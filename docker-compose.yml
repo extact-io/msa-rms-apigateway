@@ -11,8 +11,8 @@ services:
       - ENV_RMS_SERVICE_URL_ITEM=http://msa-service-item:7002
       - ENV_RMS_SERVICE_URL_RESERVATION=http://msa-service-reservation:7003
       - ENV_RMS_SERVICE_URL_USER=http://msa-service-user:7004
-      - TRACING_ENABLED=true
-      - TRACING_HOST=jeager
+      - TRACING_ENABLED=true  # for Helidon config
+      - TRACING_HOST=jeager   # for Helidon config
   msa-service-item:
     image: extact-io/msa-service-item:latest
     container_name: "msa-service-item"
@@ -37,12 +37,10 @@ services:
     image: jaegertracing/all-in-one:1.39
     ports:
       - "6831:6831/udp" # accept jaeger.thrift over compact thrift protocol
-      - "6832:6832/udp" # accept jaeger.thrift over binary thrift protocol
       - "5778:5778"     # serve configs
       - "16686:16686"   # serve frontend
       - "14250:14250"   # accept model.proto
       - "14268:14268"   # accept jaeger.thrift directly from clients
-      - "14269:14269"   #
       - "9411:9411"     # Zipkin compatible endpoint (optional)
     environment:
       - COLLECTOR_ZIPKIN_HOST_PORT=9411
