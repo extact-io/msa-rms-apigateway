@@ -55,7 +55,7 @@ docker run -d --name jaeger \
     -p 9411:9411 \
     --name jaeger --rm \
     --network msa-apigateway-network \
-  	jaegertracing/all-in-one1:1.39 || {
+  	jaegertracing/all-in-one:1.39 || {
     	echo "jaeger start fail error:$?" && END_STATUS=1  
     }
 

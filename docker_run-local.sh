@@ -56,7 +56,7 @@ docker run -d \
     -e TRACING_HOST=jaeger \
     --name msa-service-user --rm \
     --network msa-apigateway-network \
-    extact-io/msa-service-user1:latest || {
+    extact-io/msa-service-user:latest || {
     	echo "msa-service-user start fail error:$?" && END_STATUS=1  
     }
 
@@ -72,7 +72,7 @@ docker run -d --name jaeger \
     -p 9411:9411 \
     --name jaeger --rm \
     --network msa-apigateway-network \
-  	jaegertracing/all-in-one1:1.39 || {
+  	jaegertracing/all-in-one:1.39 || {
     	echo "jaeger start fail error:$?" && END_STATUS=1  
     }
 
