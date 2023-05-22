@@ -125,6 +125,10 @@
 			<groupId>org.eclipse.microprofile.opentracing</groupId>
 			<artifactId>microprofile-opentracing-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.microprofile.fault-tolerance</groupId>
+			<artifactId>microprofile-fault-tolerance-api</artifactId>
+		</dependency>
 
 		<!-- dependent OpenTracing APIs -->
 		<dependency>
@@ -191,6 +195,16 @@
 			<groupId>io.helidon.microprofile.tracing</groupId>
 			<artifactId>helidon-microprofile-tracing</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.helidon.microprofile</groupId>
+			<artifactId>helidon-microprofile-fault-tolerance</artifactId>
+	     	<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.helidon.microprofile.metrics</groupId>
+			<artifactId>helidon-microprofile-metrics</artifactId>
+    		<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.helidon.tracing</groupId>

@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import io.extact.msa.rms.apigateway.external.UserAccountApi;
@@ -12,10 +13,17 @@ import io.extact.msa.rms.apigateway.external.dto.AddUserAccountDto;
 import io.extact.msa.rms.apigateway.external.dto.UserAccountDto;
 import io.extact.msa.rms.apigateway.external.restclient.UserAccountApiRestClient;
 import io.extact.msa.rms.platform.fw.exception.BusinessFlowException;
+import io.extact.msa.rms.platform.fw.exception.RmsNetworkConnectionException;
 import io.extact.msa.rms.platform.fw.exception.interceptor.NetworkConnectionErrorAware;
 
 @ApplicationScoped
 @NetworkConnectionErrorAware
+@CircuitBreaker(
+        requestVolumeThreshold = 4, 
+        failureRatio=0.5, 
+        delay = 10000, 
+        successThreshold = 3,
+        failOn = RmsNetworkConnectionException.class)
 public class UserAccountApiProxy implements UserAccountApi {
 
     private UserAccountApiRestClient client;

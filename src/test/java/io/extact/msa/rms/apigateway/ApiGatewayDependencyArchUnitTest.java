@@ -92,6 +92,7 @@ class ApiGatewayDependencyArchUnitTest {
                                 "org.apache.commons.lang3..",
                                 "org.slf4j..",
                                 "org.eclipse.microprofile.rest.client..",
+                                "org.eclipse.microprofile.faulttolerance..",
                                 "jakarta.inject..",
                                 "jakarta.enterprise.context..",
                                 "jakarta.ws..",
