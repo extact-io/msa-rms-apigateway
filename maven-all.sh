@@ -20,7 +20,7 @@ fi
 #-----------------------
 # define directory
 #-----------------------
-POM_DIR="msa-rms"
+POM_DIR="msa-rms-parent"
 PLATFORM_DIR="msa-rms-platform"
 GW_DIR="msa-rms-apigateway"
 ITEM_DIR="msa-rms-service-item"
