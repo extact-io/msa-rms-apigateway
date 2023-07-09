@@ -182,11 +182,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>io.helidon.webserver</groupId>
-			<artifactId>helidon-webserver-access-log</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>io.helidon.health</groupId>
 			<artifactId>helidon-health-checks</artifactId>
 			<scope>runtime</scope>
